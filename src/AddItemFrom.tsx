@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type ItemFormPropsType = {
     addItem: (title: string) => void;
@@ -9,7 +9,7 @@ export function AddItemForm(props: ItemFormPropsType) {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.target.value);
   };
 
@@ -20,7 +20,7 @@ export function AddItemForm(props: ItemFormPropsType) {
     } else setError("Заполните поле");
   };
 
-  const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     e.charCode === 13 && handleAddTasks();
     setError(null);
   };
