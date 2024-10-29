@@ -24,7 +24,7 @@ export type TodolistType = {
   filter: FilterValuesType;
 };
 
-type tasksStateType = {
+export type TasksStateType = {
   [key: string]: TaskType[];
 };
 
@@ -32,7 +32,7 @@ function App() {
   let todolistId1 = v1();
   let todolistId2 = v1();
 
-  const [tasksObj, setTasksObj] = useState<tasksStateType>({
+  const [tasksObj, setTasksObj] = useState<TasksStateType>({
     [todolistId1]: [
       {
         id: v1(),
@@ -63,6 +63,40 @@ function App() {
       },
     ],
   });
+  
+  function removeTask(id: string, todolistId: string) {
+    let tasks = tasksObj[todolistId];
+    let resultTasks = tasks.filter((t) => t.id !== id);
+    tasksObj[todolistId] = resultTasks;
+    setTasksObj({ ...tasksObj });
+  }
+
+  function addItem(title: string, todolistId: string) {
+    let newTask: TaskType = { id: v1(), title: title, isDone: false };
+    let tasks = tasksObj[todolistId];
+
+    let newTasks: TaskType[] = [newTask, ...tasks];
+    tasksObj[todolistId] = newTasks;
+    setTasksObj({ ...tasksObj });
+  }
+
+  function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+    let tasks = tasksObj[todolistId].map((t) =>
+      t.id === taskId ? { ...t, isDone: isDone } : t
+    );
+    setTasksObj({ ...tasksObj, [todolistId]: tasks });
+  }
+
+  function changeTaskTitle(
+    taskId: string,
+    newTitle: string,
+    todolistId: string
+  ) {
+    let tasks = tasksObj[todolistId].map((t) =>
+      t.id === taskId ? { ...t, title: newTitle } : t
+    );
+    setTasksObj({ ...tasksObj, [todolistId]: tasks });
+  }
 
   const [todolists, setTodolists] = useState<TodolistType[]>([
     {
@@ -84,35 +118,14 @@ function App() {
     setTasksObj({ ...tasksObj });
   }
 
-  function removeTask(id: string, todolistId: string) {
-    let tasks = tasksObj[todolistId];
-    let resultTasks = tasks.filter((t) => t.id !== id);
-    tasksObj[todolistId] = resultTasks;
-    setTasksObj({ ...tasksObj });
-  }
-
+   // TODO: вернуть копию вместо state
   function changeFilter(value: FilterValuesType, todolistId: string) {
     let todolist = todolists.find((tl) => tl.id === todolistId);
     if (todolist) todolist.filter = value;
     setTodolists([...todolists]);
   }
 
-  function addItem(title: string, todolistId: string) {
-    let newTask: TaskType = { id: v1(), title: title, isDone: false };
-    let tasks = tasksObj[todolistId];
-
-    let newTasks: TaskType[] = [newTask, ...tasks];
-    tasksObj[todolistId] = newTasks;
-    setTasksObj({ ...tasksObj });
-  }
-
-  function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
-    let task = tasksObj[todolistId].find((t) => t.id === taskId);
-    if (task) task.isDone = isDone;
-    setTasksObj({ ...tasksObj });
-  }
-
-  function addTodolist(title: string) {
+  function addTodolistAC(title: string) {
     let todolist: TodolistType = {
       id: v1(),
       filter: "all",
@@ -122,16 +135,7 @@ function App() {
     setTasksObj({ ...tasksObj, [todolist.id]: [] });
   }
 
-  function changeTaskTitle(
-    taskId: string,
-    newTitle: string,
-    todolistId: string
-  ) {
-    let task = tasksObj[todolistId].find((t) => t.id === taskId);
-    if (task) task.title = newTitle;
-    setTasksObj({ ...tasksObj });
-  }
-
+  // TODO: вернуть копию вместо state
   function changeTodolistTitle(newTitle: string, todolistId: string) {
     let todolist = todolists.find((tl) => tl.id === todolistId);
     if (todolist) todolist.title = newTitle;
@@ -151,7 +155,7 @@ function App() {
       </AppBar>
       <Container fixed>
         <Grid container style={{ padding: "20px" }}>
-          <AddItemForm addItem={addTodolist} />
+          <AddItemForm addItem={addTodolistAC} />
         </Grid>
         <Grid2 container spacing={3}>
           {todolists.map((tl) => {
@@ -164,7 +168,7 @@ function App() {
               tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone);
             }
             return (
-              <Grid item>
+              <Grid item key={tl.id}>
                 <Paper style={{ padding: "10px" }}>
                   <Todolist
                     key={tl.id}
