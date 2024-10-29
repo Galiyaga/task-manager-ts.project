@@ -1,5 +1,6 @@
 import { act } from "react";
-import { TasksStateType } from "../App";
+// import { TasksStateType } from "../App";
+import { TasksStateType } from "../AppWithReducers";
 import { TaskType } from "../Todolist";
 import { v1 } from "uuid";
 import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
