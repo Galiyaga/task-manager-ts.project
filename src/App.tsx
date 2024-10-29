@@ -114,15 +114,14 @@ function App() {
   function removeTodolist(todolistId: string) {
     let filteredTodolist = todolists.filter((tl) => tl.id !== todolistId);
     setTodolists(filteredTodolist);
-    delete tasksObj[todolistId];
-    setTasksObj({ ...tasksObj });
+
+    const { [todolistId]: _, ...taskObjCopy} = tasksObj;
+    setTasksObj(taskObjCopy);
   }
 
-   // TODO: вернуть копию вместо state
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    let todolist = todolists.find((tl) => tl.id === todolistId);
-    if (todolist) todolist.filter = value;
-    setTodolists([...todolists]);
+    let updatedTtodolist = todolists.map((tl) => tl.id === todolistId ? {...tl, filter: value} : tl);
+    setTodolists(updatedTtodolist);
   }
 
   function addTodolistAC(title: string) {
@@ -135,11 +134,9 @@ function App() {
     setTasksObj({ ...tasksObj, [todolist.id]: [] });
   }
 
-  // TODO: вернуть копию вместо state
   function changeTodolistTitle(newTitle: string, todolistId: string) {
-    let todolist = todolists.find((tl) => tl.id === todolistId);
-    if (todolist) todolist.title = newTitle;
-    setTodolists([...todolists]);
+    let updatedTtodolist = todolists.map((tl) => tl.id === todolistId ? {...tl, title: newTitle} : tl);
+    setTodolists(updatedTtodolist);
   }
 
   return (
