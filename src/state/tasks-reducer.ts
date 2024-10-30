@@ -1,11 +1,10 @@
-import { act } from "react";
-// import { TasksStateType } from "../App";
 import { TasksStateType } from "../AppWithRedux";
-import { TaskType } from "../Todolist";
 import { v1 } from "uuid";
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
+  todolistId1,
+  todolistId2,
 } from "./todolists-reducer";
 
 export type RemoveTaskActionType = {
@@ -42,8 +41,40 @@ export type ActionsTypes =
   | AddTodolistActionType
   | RemoveTodolistActionType;
 
+const initialState: TasksStateType = {
+  [todolistId1]: [
+    {
+      id: v1(),
+      title: "CSS",
+      isDone: true,
+    },
+    {
+      id: v1(),
+      title: "JS",
+      isDone: true,
+    },
+    {
+      id: v1(),
+      title: "React",
+      isDone: false,
+    },
+  ],
+  [todolistId2]: [
+    {
+      id: v1(),
+      title: "Book",
+      isDone: true,
+    },
+    {
+      id: v1(),
+      title: "Cheese",
+      isDone: false,
+    },
+  ],
+}
+
 export const tasksReducer = (
-  state: TasksStateType,
+  state: TasksStateType = initialState,
   action: ActionsTypes
 ): TasksStateType => {
   switch (action.type) {
@@ -91,8 +122,8 @@ export const tasksReducer = (
       return stateCopy;
     }
     default:
-      throw new Error("I don`t understand");
-  }
+      return state  
+    }
 };
 
 export const removeTaskAC = (
