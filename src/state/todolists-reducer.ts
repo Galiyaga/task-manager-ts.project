@@ -1,6 +1,6 @@
 import { v1 } from "uuid";
 // import { FilterValuesType, TodolistType } from "../App";
-import { FilterValuesType, TodolistType } from "../AppWithReducers";
+import { FilterValuesType, TodolistType } from "../AppWithRedux";
 
 export type RemoveTodolistActionType = {
   type: "REMOVE-TODOLIST";
@@ -10,7 +10,7 @@ export type RemoveTodolistActionType = {
 export type AddTodolistActionType = {
   type: "ADD-TODOLIST";
   title: string;
-  todolistId: string
+  todolistId: string;
 };
 
 export type ChangeTodolistTitleActionType = {
@@ -40,7 +40,10 @@ export const todolistsReducer = (
       return state.filter((tl) => tl.id !== action.id);
     }
     case "ADD-TODOLIST": {
-      return [{ id: action.todolistId, title: action.title, filter: "all" }, ...state];
+      return [
+        { id: action.todolistId, title: action.title, filter: "all" },
+        ...state,
+      ];
     }
     // TODO: вернуть копию вместо state
     case "CHANGE-TODOLIST-TITLE": {

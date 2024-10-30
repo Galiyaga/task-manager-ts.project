@@ -1,5 +1,5 @@
 // import { TasksStateType } from "../App";
-import { TasksStateType } from "../AppWithReducers";
+import { TasksStateType } from "../AppWithRedux";
 import {
   addTaskAC,
   changeTaskStatusAC,
@@ -189,8 +189,8 @@ test("title of specified task should be change", () => {
   const action = changeTaskTitleAC("3", "todolistId1", "Java");
   const endState = tasksReducer(startState, action);
 
-  expect(endState["todolistId1"][2].title).toBe('Java');
-  expect(endState["todolistId2"][2].title).toBe('tea')
+  expect(endState["todolistId1"][2].title).toBe("Java");
+  expect(endState["todolistId2"][2].title).toBe("tea");
 });
 
 test("new property with new array should be added when new todolist is added", () => {
@@ -233,14 +233,13 @@ test("new property with new array should be added when new todolist is added", (
 
   const action = addTodolistAC("new todolist");
   const endState = tasksReducer(startState, action);
-  
-  
-  const keys = Object.keys(endState)
-  const newKey = keys.find(k => k !== "todolistId1" && k !== "todolistId2")
-  if (!newKey) throw Error('new key should be added')
+
+  const keys = Object.keys(endState);
+  const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2");
+  if (!newKey) throw Error("new key should be added");
 
   expect(keys.length).toBe(3);
-  expect(endState[newKey]).toStrictEqual([])
+  expect(endState[newKey]).toStrictEqual([]);
 });
 
 test(" property with todolistId should be deleted", () => {
@@ -283,10 +282,9 @@ test(" property with todolistId should be deleted", () => {
 
   const action = removeTodolistAC("todolistId2");
   const endState = tasksReducer(startState, action);
-  
-  
-  const keys = Object.keys(endState)
+
+  const keys = Object.keys(endState);
 
   expect(keys.length).toBe(1);
-  expect(endState['todolistId2']).toBeUndefined()
+  expect(endState["todolistId2"]).toBeUndefined();
 });
