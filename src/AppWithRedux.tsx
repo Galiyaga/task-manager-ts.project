@@ -46,7 +46,7 @@ function AppWithRedux() {
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatch(changeTodolistFilterAC(todolistId, value));
+    dispatch(changeTodolistFilterAC(value, todolistId ));
   }
 
   function addTodolist(title: string) {

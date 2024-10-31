@@ -30,21 +30,21 @@ export type ActionsTypes =
   | ChangeTodolistTitleActionType
   | ChangeTodolistFilterActionType;
 
-  export let todolistId1 = v1();
-  export let todolistId2 = v1();
+export let todolistId1 = v1();
+export let todolistId2 = v1();
 
-  const initialState: TodolistType[] = [
-    {
-      id: todolistId1,
-      title: "What to learn",
-      filter: "all",
-    },
-    {
-      id: todolistId2,
-      title: "What to buy",
-      filter: "all",
-    },
-  ]
+const initialState: TodolistType[] = [
+  {
+    id: todolistId1,
+    title: "What to learn",
+    filter: "all",
+  },
+  {
+    id: todolistId2,
+    title: "What to buy",
+    filter: "all",
+  },
+];
 
 export const todolistsReducer = (
   state: TodolistType[] = initialState,
@@ -52,31 +52,41 @@ export const todolistsReducer = (
 ): TodolistType[] => {
   switch (action.type) {
     case "REMOVE-TODOLIST": {
-      return state.filter((tl) => tl.id !== action.id);
+      const stateCopy = [...state];
+      const todolists = stateCopy.filter((tl) => tl.id !== action.id);
+      return todolists;
     }
-    case "ADD-TODOLIST": {
-      return [
-        { id: action.todolistId, title: action.title, filter: "all" },
-        ...state,
-      ];
-    }
-    // TODO: вернуть копию вместо state
-    case "CHANGE-TODOLIST-TITLE": {
-      let todolist = state.find((tl) => tl.id === action.id);
-      if (todolist) todolist.title = action.title;
 
-      return [...state];
+    case "ADD-TODOLIST": {
+      const stateCopy = [...state];
+      const todolists = [
+        {
+          id: action.todolistId,
+          title: action.title,
+          filter: "all" as FilterValuesType,
+        },
+        ...stateCopy,
+      ];
+      return todolists;
+    }
+    case "CHANGE-TODOLIST-TITLE": {
+      const stateCopy = [...state];
+      let todolists = stateCopy.map((tl) =>
+        tl.id === action.id ? { ...tl, title: action.title } : tl
+      );
+      return todolists;
     }
     // TODO: вернуть копию вместо state
     case "CHANGE-TODOLIST-FILTER": {
-      let todolist = state.find((tl) => tl.id === action.id);
-      if (todolist) todolist.filter = action.filter;
-
-      return [...state];
+      const stateCopy = [...state];
+      let todolists = stateCopy.map((tl) =>
+        tl.id === action.id ? { ...tl, filter: action.filter } : tl
+      );
+      return todolists;
     }
 
     default:
-      return state
+      return state;
   }
 };
 
@@ -98,8 +108,8 @@ export const changeTodolistTitleAC = (
 };
 
 export const changeTodolistFilterAC = (
-  id: string,
-  newFilter: FilterValuesType
+  newFilter: FilterValuesType,
+  id: string
 ): ChangeTodolistFilterActionType => {
-  return { type: "CHANGE-TODOLIST-FILTER", id: id, filter: newFilter };
+  return { type: "CHANGE-TODOLIST-FILTER", filter: newFilter, id: id };
 };

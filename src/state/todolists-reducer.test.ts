@@ -109,7 +109,7 @@ test("correct filter should be changed", () => {
     },
   ];
 
-  const action = changeTodolistFilterAC(todolistId2, newFilter);
+  const action = changeTodolistFilterAC(newFilter, todolistId2 );
 
   const endState = todolistsReducer(startState, action);
 
