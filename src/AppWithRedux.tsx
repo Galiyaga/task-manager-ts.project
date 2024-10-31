@@ -22,6 +22,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
+import { useCallback } from "react";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -36,26 +37,27 @@ export type TasksStateType = {
 };
 
 function AppWithRedux() { 
+  console.log('AppWithRedux is called')
 
   const dispatch = useDispatch()
   const todolists = useSelector<AppRootStateType, TodolistType[]>( state => state.todolists)
   
 
-  function removeTodolist(todolistId: string) {
+  const removeTodolist = useCallback((todolistId: string) => {
     dispatch(removeTodolistAC(todolistId))
-  }
+  }, [])
 
-  function changeFilter(value: FilterValuesType, todolistId: string) {
+  const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
     dispatch(changeTodolistFilterAC(value, todolistId ));
-  }
+  }, [])
 
-  function addTodolist(title: string) {
+  const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistAC(title));
-  }
+  }, [])
 
-  function changeTodolistTitle(newTitle: string, todolistId: string) {
+  const changeTodolistTitle = useCallback((newTitle: string, todolistId: string) => {
     dispatch(changeTodolistTitleAC(newTitle, todolistId));
-  }
+  }, [])
 
   return (
     <div className="App">

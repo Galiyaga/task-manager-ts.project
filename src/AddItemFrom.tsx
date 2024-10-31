@@ -1,12 +1,14 @@
 import { ControlPoint } from "@mui/icons-material";
 import { Button, IconButton, TextField } from "@mui/material";
+import React from "react";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type ItemFormPropsType = {
     addItem: (title: string) => void;
 };
 
-export function AddItemForm(props: ItemFormPropsType) {
+export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
+  console.log('AddItemForm is called')
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -23,8 +25,8 @@ export function AddItemForm(props: ItemFormPropsType) {
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (error !== null) setError(null);
     e.charCode === 13 && handleAddTasks();
-    setError(null);
   };
 
   return (
@@ -45,4 +47,4 @@ export function AddItemForm(props: ItemFormPropsType) {
         </IconButton>
     </div>
   )
-}
+})

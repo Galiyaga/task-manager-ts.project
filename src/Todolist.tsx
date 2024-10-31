@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { FilterValuesType } from "./AppWithRedux";
 import { AddItemForm } from "./AddItemFrom";
 import { EditableSpan } from "./EditableSpan";
@@ -7,6 +7,7 @@ import { Delete } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from "./state/tasks-reducer";
+import React from "react";
 
 export type TaskType = {
   id: string;
@@ -23,7 +24,9 @@ type PropsType = {
   removeTodolist: (todolistId: string) => void;
 };
 
-export function Todolist(props: PropsType) {
+export const Todolist = React.memo((props: PropsType) => {
+  console.log('Todolist is called')
+
   const tasksObj = useSelector<AppRootStateType, TaskType[]>( state => state.tasks[props.id])
   const dispatch = useDispatch()
 
@@ -58,7 +61,7 @@ export function Todolist(props: PropsType) {
         </IconButton>
       </h3>
       <div>
-        <AddItemForm addItem={(title) =>dispatch(addTaskAC(title, props.id))} />
+        <AddItemForm addItem={useCallback((title) =>dispatch(addTaskAC(title, props.id)), [])} />
         <ul>
           {tasksForTodoList.map((task) => {
             const onClickHandler = () => dispatch(removeTaskAC(task.id, props.id));
@@ -113,4 +116,4 @@ export function Todolist(props: PropsType) {
       </div>
     </div>
   );
-}
+})
