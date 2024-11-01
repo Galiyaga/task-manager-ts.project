@@ -41,9 +41,7 @@ export type ActionsTypes =
   | AddTodolistActionType
   | RemoveTodolistActionType;
 
-const initialState: TasksStateType = {
-
-}
+const initialState: TasksStateType = {};
 
 export const tasksReducer = (
   state: TasksStateType = initialState,
@@ -85,16 +83,16 @@ export const tasksReducer = (
     }
     case "ADD-TODOLIST": {
       const stateCopy = { ...state };
-      return {[action.todolistId]: [], ...stateCopy };
+      return { [action.todolistId]: [], ...stateCopy };
     }
     case "REMOVE-TODOLIST": {
       const stateCopy = { ...state };
-      const { [action.id]: _, ...taskObjCopy} = stateCopy;
+      const { [action.id]: _, ...taskObjCopy } = stateCopy;
       return taskObjCopy;
     }
     default:
-      return state  
-    }
+      return state;
+  }
 };
 
 export const removeTaskAC = (
