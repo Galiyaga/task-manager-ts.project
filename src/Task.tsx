@@ -7,9 +7,9 @@ import { Checkbox, IconButton } from "@mui/material";
 import { EditableSpan } from "./EditableSpan";
 import React from "react";
 
-type TaskPropsType = {
-    task: TaskType,
-    todolistId: string
+export type TaskPropsType = {
+    todolistId: string,
+    task: TaskType
   }
 
 export const Task = React.memo((props: TaskPropsType) => {

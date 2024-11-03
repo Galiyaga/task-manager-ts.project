@@ -28,12 +28,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -49,6 +52,23 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^10.0.0"
-  }
+    "@chromatic-com/storybook": "3.2.2",
+    "@storybook/addon-a11y": "^8.4.1",
+    "@storybook/addon-essentials": "8.4.1",
+    "@storybook/addon-interactions": "8.4.1",
+    "@storybook/addon-onboarding": "8.4.1",
+    "@storybook/addon-storysource": "^8.4.1",
+    "@storybook/blocks": "8.4.1",
+    "@storybook/preset-create-react-app": "8.4.1",
+    "@storybook/react": "8.4.1",
+    "@storybook/react-webpack5": "8.4.1",
+    "@storybook/test": "8.4.1",
+    "@types/prop-types": "^15",
+    "@types/uuid": "^10.0.0",
+    "eslint-plugin-storybook": "^0.10.2",
+    "prop-types": "15.8.1",
+    "storybook": "8.4.1",
+    "webpack": "5.96.1"
+  },
+  "packageManager": "yarn@4.5.1+sha512.341db9396b6e289fecc30cd7ab3af65060e05ebff4b3b47547b278b9e67b08f485ecd8c79006b405446262142c7a38154445ef7f17c1d5d1de7d90bf9ce7054d"
 }

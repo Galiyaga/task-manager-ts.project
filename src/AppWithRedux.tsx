@@ -33,7 +33,7 @@ export type TodolistType = {
 };
 
 export type TasksStateType = {
-  [key: string]: TaskType[];
+  [todolistId: string]: TaskType[];
 };
 
 function AppWithRedux() { 

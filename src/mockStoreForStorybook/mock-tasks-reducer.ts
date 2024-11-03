@@ -3,8 +3,9 @@ import { v1 } from "uuid";
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
-  todolistId1
-} from "./todolists-reducer";
+  todolistId1,
+  todolistId2,
+} from "./mock-todolists-reducer";
 
 export type RemoveTaskActionType = {
   type: "REMOVE-TASK";
@@ -40,7 +41,20 @@ export type ActionsTypes =
   | AddTodolistActionType
   | RemoveTodolistActionType;
 
-const initialState: TasksStateType = {};
+const initialState: TasksStateType = {
+  [todolistId1]: [
+    {
+      id: '1',
+      title: "CSS",
+      isDone: true,
+    },
+    {
+      id: '2',
+      title: "JS",
+      isDone: false,
+    }
+  ]
+};
 
 export const tasksReducer = (
   state: TasksStateType = initialState,
