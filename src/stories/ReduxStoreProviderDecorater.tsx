@@ -65,5 +65,5 @@ const initialGlobalState: globalStateType = {
 export const storyBookStore = createStore(rootReducer, initialGlobalState as unknown as AppRootStateType)
 
 export const ReduxStoreProviderDecorater = (storyFn: any) => {
-    return <Provider store={store} > {storyFn()} </Provider>
+    return <Provider store={storyBookStore} > {storyFn()} </Provider>
 }

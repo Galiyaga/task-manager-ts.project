@@ -3,7 +3,6 @@ import { v1 } from "uuid";
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
-  todolistId1
 } from "./todolists-reducer";
 
 export type RemoveTaskActionType = {

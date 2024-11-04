@@ -1,4 +1,3 @@
-import { Provider } from "react-redux";
 import { Meta } from '@storybook/react'
 import AppWithRedux from "./AppWithRedux";
 import { ReduxStoreProviderDecorater } from "./stories/ReduxStoreProviderDecorater";

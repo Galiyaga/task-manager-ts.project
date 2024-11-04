@@ -30,9 +30,7 @@ export type ActionsTypes =
   | ChangeTodolistTitleActionType
   | ChangeTodolistFilterActionType;
 
-export let todolistId1 = v1();
-export let todolistId2 = v1();
-
+  
 const initialState: TodolistType[] = [
 ];
 
