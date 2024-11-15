@@ -1,13 +1,13 @@
 // import { TasksStateType } from "../App";
 import { TasksStateType } from "../AppWithRedux";
 import {
-  addTaskAC,
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  removeTaskAC,
+  removeTask,
+  addTask,
+  changeTaskStatus,
+  changeTaskTitle,
   tasksReducer,
-} from "./tasks-reducer";
-import { addTodolistAC, removeTodolistAC } from "./todolists-reducer";
+} from "./tasksSlice";
+import { addTodolist, removeTodolist } from "./todolistsSlice";
 
 test("correct task should be deleted from correct array", () => {
   const startState: TasksStateType = {
@@ -47,7 +47,7 @@ test("correct task should be deleted from correct array", () => {
     ],
   };
 
-  const action = removeTaskAC("2", "todolistId2");
+  const action = removeTask({ taskId: "2", todolistId: "todolistId2" });
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId1"].length).toBe(3);
@@ -93,7 +93,7 @@ test("correct task should be added from correct array", () => {
     ],
   };
 
-  const action = addTaskAC("C++", "todolistId1");
+  const action = addTask({ title: "C++", todolistId: "todolistId1" });
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId2"].length).toBe(3);
@@ -141,7 +141,11 @@ test("status of specified task should be change", () => {
     ],
   };
 
-  const action = changeTaskStatusAC("2", "todolistId2", false);
+  const action = changeTaskStatus({
+    taskId: "2",
+    todolistId: "todolistId2",
+    isDone: false,
+  });
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId2"][1].isDone).toBeFalsy;
@@ -186,7 +190,11 @@ test("title of specified task should be change", () => {
     ],
   };
 
-  const action = changeTaskTitleAC("3", "todolistId1", "Java");
+  const action = changeTaskTitle({
+    taskId: "3",
+    todolistId: "todolistId1",
+    title: "Java",
+  });
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId1"][2].title).toBe("Java");
@@ -231,7 +239,7 @@ test("new property with new array should be added when new todolist is added", (
     ],
   };
 
-  const action = addTodolistAC("new todolist");
+  const action = addTodolist({title: "new todolist", todolistId: "todolistId3"});
   const endState = tasksReducer(startState, action);
 
   const keys = Object.keys(endState);
@@ -280,7 +288,7 @@ test(" property with todolistId should be deleted", () => {
     ],
   };
 
-  const action = removeTodolistAC("todolistId2");
+  const action = removeTodolist("todolistId2");
   const endState = tasksReducer(startState, action);
 
   const keys = Object.keys(endState);
@@ -288,3 +296,4 @@ test(" property with todolistId should be deleted", () => {
   expect(keys.length).toBe(1);
   expect(endState["todolistId2"]).toBeUndefined();
 });
+

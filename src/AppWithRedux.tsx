@@ -14,15 +14,16 @@ import {
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import {
-  addTodolistAC,
-  changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  removeTodolistAC,
-} from "./state/todolists-reducer";
+  addTodolist,
+  changeTodolistFilter,
+  changeTodolistTitle,
+  removeTodolist,
+} from "./state/todolistsSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
 import { useCallback } from "react";
+import { v1 } from "uuid";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -44,19 +45,19 @@ function AppWithRedux() {
   
 
   const removeTodolist = useCallback((todolistId: string) => {
-    dispatch(removeTodolistAC(todolistId))
+    dispatch(removeTodolist(todolistId))
   }, [])
 
   const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
-    dispatch(changeTodolistFilterAC(value, todolistId ));
+    dispatch(changeTodolistFilter(value, todolistId ));
   }, [])
 
-  const addTodolist = useCallback((title: string) => {
-    dispatch(addTodolistAC(title));
+  const addTodolist = useCallback((title: string, todolistId: string = v1()) => {
+    dispatch(addTodolist(title, todolistId));
   }, [])
 
   const changeTodolistTitle = useCallback((newTitle: string, todolistId: string) => {
-    dispatch(changeTodolistTitleAC(newTitle, todolistId));
+    dispatch(changeTodolistTitle(newTitle, todolistId));
   }, [])
 
   return (
