@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilterValuesType, TodolistType } from '../AppWithRedux';
-import { v1 } from 'uuid';
 
 const initialState: TodolistType[] = [];
 
