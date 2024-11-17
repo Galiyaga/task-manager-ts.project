@@ -239,7 +239,7 @@ test("new property with new array should be added when new todolist is added", (
     ],
   };
 
-  const action = addTodolist({title: "new todolist", todolistId: "todolistId3"});
+  const action = addTodolist({title: "new todolist", id: "todolistId3"});
   const endState = tasksReducer(startState, action);
 
   const keys = Object.keys(endState);

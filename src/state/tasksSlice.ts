@@ -32,7 +32,7 @@ const tasksSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(addTodolist, (state, action) => {
-            state[action.payload.todolistId] = []
+            state[action.payload.id] = []
         }),
         builder.addCase(removeTodolist, (state, action) => {
             delete state[action.payload]

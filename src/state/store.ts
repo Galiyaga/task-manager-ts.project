@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { tasksReducer } from "./tasks-reducer";
+import { tasksReducer } from "./tasksSlice";
 import { todolistsReducer } from "./todolistsSlice";
 
 const rootReducer = {
@@ -8,6 +8,7 @@ const rootReducer = {
 }
 
 export type AppRootStateType = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;
 
 export const store = configureStore({
     reducer: rootReducer,
