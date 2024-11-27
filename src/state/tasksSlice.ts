@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TasksStateType } from "../AppWithRedux";
 import { TaskType } from '../Todolist'
 import { v1 } from "uuid";
-import { addTodolist, removeTodolist } from "./todolistsSlice";
+import {  } from "./todolistsSlice";
 
 const initialState: TasksStateType = {};
 
@@ -30,14 +30,14 @@ const tasksSlice = createSlice({
             if (task) task.title = action.payload.title
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(addTodolist, (state, action) => {
-            state[action.payload.id] = []
-        }),
-        builder.addCase(removeTodolist, (state, action) => {
-            delete state[action.payload]
-        })
-    }
+    // extraReducers: (builder) => {
+    //     builder.addCase(addTodolist, (state, action) => {
+    //         state[action.payload.id] = []
+    //     }),
+    //     builder.addCase(removeTodolist, (state, action) => {
+    //         delete state[action.payload]
+    //     })
+    // }
 })
 
 export const {
