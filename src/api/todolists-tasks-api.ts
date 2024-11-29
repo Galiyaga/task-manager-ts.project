@@ -84,5 +84,4 @@ export const todolistsAPI = {
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<GetTasksResponseType>(`todo-lists/${ todolistId }/tasks/+ ${taskId}`)
     }
-    
 }
