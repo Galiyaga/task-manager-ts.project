@@ -1,5 +1,5 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-import { todolistsAPI } from "../api/todolists-tasks-api";
+import { todolistsAndTasksAPI } from "../api/todolists-tasks-api";
 import { TodolistType } from "../AppWithRedux";
 
 export const fetchTodolist = createAsyncThunk<
@@ -8,7 +8,7 @@ export const fetchTodolist = createAsyncThunk<
   { rejectValue: string }
 >("todolists/fetchTodolists", async (_, { rejectWithValue }) => {
   try {
-    const res = await todolistsAPI.getTodolists();
+    const res = await todolistsAndTasksAPI.getTodolists();
 
     const formattedTodolists: TodolistType[] = res.data.map((apiTodolist) => ({
       id: apiTodolist.id,
@@ -28,7 +28,7 @@ export const createTodolist = createAsyncThunk<
   { rejectValue: string }
 >("todolists/createTodolist", async (title, { rejectWithValue }) => {
   try {
-    const res = await todolistsAPI.createTodolist(title);
+    const res = await todolistsAndTasksAPI.createTodolist(title);
 
     const formattedTodolist: TodolistType = {
       id: res.data.data.item.id,
@@ -47,7 +47,7 @@ export const deleteTodolist = createAsyncThunk<
   { rejectValue: string }
 >("todolists/deleteTodolist", async (id, { rejectWithValue }) => {
   try {
-    const res = await todolistsAPI.deleteTodolist(id);
+    const res = await todolistsAndTasksAPI.deleteTodolist(id);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -60,7 +60,7 @@ export const updateTodolist = createAsyncThunk<
   { rejectValue: string }
 >("todolists/updateTodolists", async ({ id, title }, { rejectWithValue }) => {
   try {
-    const res = await todolistsAPI.updateTodolist(id, title);
+    const res = await todolistsAndTasksAPI.updateTodolist(id, title);
     if (res.data.resultCode !== 0) {
       return rejectWithValue("Failed to update todolist");
     }
@@ -69,4 +69,3 @@ export const updateTodolist = createAsyncThunk<
     return rejectWithValue(error.message);
   }
 });
-

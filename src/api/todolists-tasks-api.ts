@@ -59,7 +59,7 @@ export type GetTasksResponseType = {
     items: TaskResponseType[]
 }
 
-export const todolistsAPI = { 
+export const todolistsAndTasksAPI = { 
     getTodolists() {
         return instance.get<APITodolistType[]>('todo-lists')
     },
