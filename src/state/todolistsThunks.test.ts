@@ -5,8 +5,7 @@ import {
   ResponseTodolistsType,
   todolistsAPI,
 } from "../api/todolists-tasks-api";
-import { createTodolist, deleteTodolists, fetchTodolist, updateTodolist } from "./todolistsThunks";
-import { TodolistType } from "../AppWithRedux";
+import { createTodolist, deleteTodolist, fetchTodolist, updateTodolist } from "./todolistsThunks";
 
 jest.mock("../api/todolists-tasks-api");
 
@@ -185,7 +184,7 @@ describe("createTodolist thunk", () => {
   });
 });
 
-describe("deleteTodolists thunk", () => {
+describe("deleteTodolist thunk", () => {
   it("dispatches fulfiiled action with correct id on seccess", async () => {
     const mockResponse: AxiosResponse<ResponseTodolistsType> = {
       data: {
@@ -204,17 +203,17 @@ describe("deleteTodolists thunk", () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    const result = await deleteTodolists(mockId)(
+    const result = await deleteTodolist(mockId)(
       dispatch,
       getState,
       undefined
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTodolists.pending(expect.anything(), mockId)
+      deleteTodolist.pending(expect.anything(), mockId)
     );
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTodolists.fulfilled(mockId,
+      deleteTodolist.fulfilled(mockId,
       expect.anything(),
       mockId),
     );
@@ -229,10 +228,10 @@ describe("deleteTodolists thunk", () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    const result = await deleteTodolists(mockId)(dispatch, getState, undefined);
+    const result = await deleteTodolist(mockId)(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTodolists.pending(expect.anything(), mockId)
+      deleteTodolist.pending(expect.anything(), mockId)
     );
     expect(result.payload).toEqual("Failed to delete");
   });

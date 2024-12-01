@@ -26,7 +26,7 @@ export const createTodolist = createAsyncThunk<
   TodolistType,
   string,
   { rejectValue: string }
->("todolists/addTodolist", async (title, { rejectWithValue }) => {
+>("todolists/createTodolist", async (title, { rejectWithValue }) => {
   try {
     const res = await todolistsAPI.createTodolist(title);
 
@@ -41,11 +41,11 @@ export const createTodolist = createAsyncThunk<
   }
 });
 
-export const deleteTodolists = createAsyncThunk<
+export const deleteTodolist = createAsyncThunk<
   string,
   string,
   { rejectValue: string }
->("todolists/deleteTodolists", async (id, { rejectWithValue }) => {
+>("todolists/deleteTodolist", async (id, { rejectWithValue }) => {
   try {
     const res = await todolistsAPI.deleteTodolist(id);
     return id;

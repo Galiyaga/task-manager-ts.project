@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterValuesType, TodolistType } from "../AppWithRedux";
 import {
   createTodolist,
-  deleteTodolists,
+  deleteTodolist,
   fetchTodolist,
   updateTodolist,
 } from "./todolistsThunks";
@@ -29,7 +29,7 @@ const todolistsSlice = createSlice({
       .addCase(createTodolist.fulfilled, (state, action) => {
         state.unshift(action.payload);
       })
-      .addCase(deleteTodolists.fulfilled, (state, action) => {
+      .addCase(deleteTodolist.fulfilled, (state, action) => {
         return state.filter((tl) => tl.id !== action.payload);
       })
       .addCase(updateTodolist.fulfilled, (state, action) => {
