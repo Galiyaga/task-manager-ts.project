@@ -5,7 +5,8 @@ import {
   ResponseTodolistsType,
   todolistsAPI,
 } from "../api/todolists-tasks-api";
-import { createTodolist, fetchTodolist } from "./todolistsThunks";
+import { createTodolist, deleteTodolists, fetchTodolist, updateTodolist } from "./todolistsThunks";
+import { TodolistType } from "../AppWithRedux";
 
 jest.mock("../api/todolists-tasks-api");
 
@@ -30,6 +31,7 @@ const mockConfig: InternalAxiosRequestConfig = {
 };
 
 const mockTitle = "newTitle";
+const mockId = "newId";
 
 describe("fetchTodolist thunk", () => {
   it("dispatches fulfiiled action with formatted todolists on seccess", async () => {
@@ -180,5 +182,147 @@ describe("createTodolist thunk", () => {
       createTodolist.pending(expect.anything(), mockTitle)
     );
     expect(result.payload).toEqual("Failed to create");
+  });
+});
+
+describe("deleteTodolists thunk", () => {
+  it("dispatches fulfiiled action with correct id on seccess", async () => {
+    const mockResponse: AxiosResponse<ResponseTodolistsType> = {
+      data: {
+        resultCode: 0,
+        messages: ["1"],
+        data: {},
+      },
+      status: 200,
+      statusText: "OK",
+      headers: new AxiosHeaders(),
+      config: mockConfig,
+    };
+
+    mockedTodolistsAPI.deleteTodolist.mockResolvedValue(mockResponse);
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await deleteTodolists(mockId)(
+      dispatch,
+      getState,
+      undefined
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      deleteTodolists.pending(expect.anything(), mockId)
+    );
+    expect(dispatch).toHaveBeenCalledWith(
+      deleteTodolists.fulfilled(mockId,
+      expect.anything(),
+      mockId),
+    );
+    expect(result.payload).toEqual(mockId)
+  })
+
+  it('dispatches rejected action with error message on failure in the deleteThunk', async () => {
+    mockedTodolistsAPI.deleteTodolist.mockRejectedValue(
+      new Error("Failed to delete")
+    );
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await deleteTodolists(mockId)(dispatch, getState, undefined);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      deleteTodolists.pending(expect.anything(), mockId)
+    );
+    expect(result.payload).toEqual("Failed to delete");
+  });
+});
+
+describe("updateTodolist thunk", () => {
+  const mockTodolist = {
+    id: mockId,
+    title: mockTitle  }
+
+  it("dispatches fulfiiled action with correct id and title on seccess", async () => {
+    const mockResponse: AxiosResponse<ResponseTodolistsType> = {
+      data: {
+        resultCode: 0,
+        messages: ["1"],
+        data: {},
+      },
+      status: 200,
+      statusText: "OK",
+      headers: new AxiosHeaders(),
+      config: mockConfig,
+    };
+
+    mockedTodolistsAPI.updateTodolist.mockResolvedValue(mockResponse);
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await updateTodolist(mockTodolist)(
+      dispatch,
+      getState,
+      undefined
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTodolist.pending(expect.anything(), mockTodolist)
+    );
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTodolist.fulfilled(mockTodolist,
+      expect.anything(),
+      mockTodolist),
+    );
+    expect(result.payload).toEqual({id: mockTodolist.id, title: mockTodolist.title})
+  })
+
+  it('dispatches rejected action with error message on failure on server in the updateThunk', async () => {
+    const mockErrorResponse: AxiosResponse<ResponseTodolistsType> = {
+      data: {
+        resultCode: 1,
+        messages: ["Failed to update todolist"],
+        data: {},
+      },
+      status: 400,
+      statusText: '',
+      headers: new AxiosHeaders(),
+      config: mockConfig,
+    };
+
+    mockedTodolistsAPI.updateTodolist.mockResolvedValue(mockErrorResponse);
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await updateTodolist(mockTodolist)(
+      dispatch,
+      getState,
+      undefined
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTodolist.pending(expect.anything(), mockTodolist)
+    );
+    
+    expect(result.payload).toEqual("Failed to update todolist")
+  });
+
+  it('dispatches rejected action with error message on failure on network', async () => {
+  
+    mockedTodolistsAPI.updateTodolist.mockRejectedValue(
+      new Error("Network Error")
+    );
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await updateTodolist(mockTodolist)(dispatch, getState, undefined);
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTodolist.pending(expect.anything(), mockTodolist)
+    );
+    expect(result.payload).toEqual("Network Error");
   });
 });

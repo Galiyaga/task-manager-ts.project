@@ -4,7 +4,7 @@ import {
   createTodolist,
   deleteTodolists,
   fetchTodolist,
-  updateTodolists,
+  updateTodolist,
 } from "./todolistsThunks";
 
 const initialState: TodolistType[] = [];
@@ -32,7 +32,7 @@ const todolistsSlice = createSlice({
       .addCase(deleteTodolists.fulfilled, (state, action) => {
         return state.filter((tl) => tl.id !== action.payload);
       })
-      .addCase(updateTodolists.fulfilled, (state, action) => {
+      .addCase(updateTodolist.fulfilled, (state, action) => {
         const todolist = state.find((tl) => tl.id === action.payload.id);
         if (todolist) todolist.title = action.payload.title;
       });

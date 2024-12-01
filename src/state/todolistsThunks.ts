@@ -54,7 +54,7 @@ export const deleteTodolists = createAsyncThunk<
   }
 });
 
-export const updateTodolists = createAsyncThunk<
+export const updateTodolist = createAsyncThunk<
   { id: string; title: string },
   { id: string; title: string },
   { rejectValue: string }
