@@ -2,7 +2,7 @@ import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import {
   APITodolistType,
   ItemDataType,
-  ResponseTodolistsType,
+  ResponseTodolistsAndTasksType,
   todolistsAndTasksAPI,
 } from "../api/todolists-tasks-api";
 import {
@@ -123,7 +123,9 @@ describe("fetchTodolist thunk", () => {
 
 describe("createTodolist thunk", () => {
   it("dispatches fulfiiled action with new todolist on seccess", async () => {
-    const mockResponse: AxiosResponse<ResponseTodolistsType<ItemDataType>> = {
+    const mockResponse: AxiosResponse<
+      ResponseTodolistsAndTasksType<ItemDataType>
+    > = {
       data: {
         resultCode: 0,
         messages: ["1"],
@@ -197,7 +199,7 @@ describe("createTodolist thunk", () => {
 
 describe("deleteTodolist thunk", () => {
   it("dispatches fulfiiled action with correct id on seccess", async () => {
-    const mockResponse: AxiosResponse<ResponseTodolistsType> = {
+    const mockResponse: AxiosResponse<ResponseTodolistsAndTasksType> = {
       data: {
         resultCode: 0,
         messages: ["1"],
@@ -249,7 +251,7 @@ describe("updateTodolist thunk", () => {
   };
 
   it("dispatches fulfiiled action with correct id and title on seccess", async () => {
-    const mockResponse: AxiosResponse<ResponseTodolistsType> = {
+    const mockResponse: AxiosResponse<ResponseTodolistsAndTasksType> = {
       data: {
         resultCode: 0,
         messages: ["1"],
@@ -285,7 +287,7 @@ describe("updateTodolist thunk", () => {
   });
 
   it("dispatches rejected action with error message on failure on server in the updateThunk", async () => {
-    const mockErrorResponse: AxiosResponse<ResponseTodolistsType> = {
+    const mockErrorResponse: AxiosResponse<ResponseTodolistsAndTasksType> = {
       data: {
         resultCode: 1,
         messages: ["Failed to update todolist"],
