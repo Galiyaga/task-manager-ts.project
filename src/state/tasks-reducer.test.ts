@@ -1,9 +1,7 @@
 // import { TasksStateType } from "../App";
 import { TasksStateType } from "../AppWithRedux";
-import {
-  tasksReducer,
-} from "./tasksSlice";
-import { createTask, deleteTask, updateTask } from "./tasksThunk";
+import { tasksReducer } from "./tasksSlice";
+import { createTask, deleteTask, getTasks, updateTask } from "./tasksThunk";
 import {} from "./todolistsSlice";
 
 describe("todolists reducer", () => {
@@ -44,47 +42,53 @@ describe("todolists reducer", () => {
     ],
   };
 
-    it("correct tasks array shold be get in correct todolist", () => {
-      const action = {
-        type: createTask.fulfilled.type,
-        payload: {tasksArr: startState['todolistId1'], todolistId: 'todolistId1'},
-      };
+  it("correct tasks array should be get in correct todolist", () => {
+    const action = {
+      type: getTasks.fulfilled.type,
+      payload: {
+        tasksArr: startState["todolistId1"],
+        todolistId: "todolistId1",
+      },
+    };
 
-      const endState = tasksReducer(startState, action)
+    const endState = tasksReducer(startState, action);
 
-      expect(endState['todolistId1']).toEqual([
-        {
-          id: "1",
-          title: "CSS",
-          isDone: false,
-        },
-        {
-          id: "2",
-          title: "JS",
-          isDone: true,
-        },
-        {
-          id: "3",
-          title: "React",
-          isDone: false,
-        },
-      ])
-    })
-  
-    it("сorrect task should be added from correct array", () => {
-      const action = {
-        type: createTask.fulfilled.type,
-        payload: { title: "C++", todolistId: "todolistId1" },
-      };
-  
-      const endState = tasksReducer(startState, action);
-  
-      expect(endState["todolistId2"].length).toBe(3);
-      expect(endState["todolistId1"].length).toBe(4);
-      expect(endState["todolistId1"][0].id).toBeDefined();
-      expect(endState["todolistId1"][0].title).toBe("C++");
-      expect(endState["todolistId1"][0].isDone).toBe(false);
-    });
+    expect(endState["todolistId1"]).toEqual([
+      {
+        id: "1",
+        title: "CSS",
+        isDone: false,
+      },
+      {
+        id: "2",
+        title: "JS",
+        isDone: true,
+      },
+      {
+        id: "3",
+        title: "React",
+        isDone: false,
+      },
+    ]);
+  });
+
+  it("сorrect task should be added from correct array", () => {
+    const action = {
+      type: createTask.fulfilled.type,
+      payload: {
+        task: { id: "4", title: "C++", isDone: true },
+        todolistId: "todolistId1",
+      },
+    };
+
+    const endState = tasksReducer(startState, action);
+
+    expect(endState["todolistId2"].length).toBe(3);
+    expect(endState["todolistId1"].length).toBe(4);
+    expect(endState["todolistId1"][0].id).toBeDefined();
+    expect(endState["todolistId1"][0].title).toBe("C++");
+    expect(endState["todolistId1"][0].isDone).toBe(true);
+  });
 
   it("correct task should be deleted from correct array", () => {
     const action = {
@@ -104,7 +108,7 @@ describe("todolists reducer", () => {
       type: updateTask.fulfilled.type,
       payload: {
         todolistId: "todolistId2",
-        taskId: '2',
+        taskId: "2",
         title: "beer",
         completed: false,
       },
@@ -118,7 +122,6 @@ describe("todolists reducer", () => {
     expect(endState["todolistId1"][1].title).toBe("JS");
   });
 });
-
 
 // test("new property with new array should be added when new todolist is added", () => {
 //   const startState: TasksStateType = {
