@@ -42,7 +42,7 @@ describe("todolists reducer", () => {
     expect(endState[1].filter).toBe(newFilter);
   }),
 
-  it('the entire list of tudulists should be received', () => {
+  it('the entire list of todulists should be received', () => {
     const action = {
       type: fetchTodolist.fulfilled.type,
       payload: startState,

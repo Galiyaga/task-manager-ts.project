@@ -78,14 +78,18 @@ describe("getTasks thunk", () => {
     );
     expect(dispatch).toHaveBeenCalledWith(
       getTasks.fulfilled(
-        [{ id: "task-1", title: "Task 1 Title", isDone: false }],
+        {
+          tasksArr: [{ id: "task-1", title: "Task 1 Title", isDone: false }],
+          todolistId: "test-totdolist-id",
+        },
         expect.anything(),
         todolistId
       )
     );
-    expect(result.payload).toEqual([
-      { id: "task-1", title: "Task 1 Title", isDone: false },
-    ]);
+    expect(result.payload).toEqual({
+      tasksArr: [{ id: "task-1", title: "Task 1 Title", isDone: false }],
+      todolistId: "test-totdolist-id",
+    });
   });
 
   it("dispatches rejected action with error message on failure in the getTasksThunk", async () => {
@@ -146,16 +150,18 @@ describe("createTask thunk", () => {
 
     expect(dispatch).toHaveBeenCalledWith(
       createTask.fulfilled(
-        { id: "task-1", title: "Task 1 Title", isDone: false },
+        {
+          task: { id: "task-1", title: "Task 1 Title", isDone: false },
+          todolistId: "test-totdolist-id",
+        },
         expect.anything(),
         mockTask
       )
     );
 
     expect(result.payload).toEqual({
-      id: "task-1",
-      title: "Task 1 Title",
-      isDone: false,
+      task: { id: "task-1", title: "Task 1 Title", isDone: false },
+      todolistId: "test-totdolist-id",
     });
   });
 
@@ -206,9 +212,16 @@ describe("deleteTask thunk", () => {
       deleteTask.pending(expect.anything(), mockForDeleteTask)
     );
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTask.fulfilled("task-1", expect.anything(), mockForDeleteTask)
+      deleteTask.fulfilled(
+        { todolistId: "test-totdolist-id", taskId: "task-1" },
+        expect.anything(),
+        mockForDeleteTask
+      )
     );
-    expect(result.payload).toEqual("task-1");
+    expect(result.payload).toEqual({
+      todolistId: "test-totdolist-id",
+      taskId: "task-1",
+    });
   });
 
   it("dispatches rejected action with error message on failure in the deleteTaskThunk", async () => {
@@ -233,12 +246,11 @@ describe("deleteTask thunk", () => {
 });
 
 describe("updateTask thunk", () => {
-  
   const mockArgs = {
     todolistId: todolistId,
     taskId: taskId,
     model: mockUpdateTaskModel,
-  }
+  };
   it("dispatches fulfiiled action with update task on seccess", async () => {
     const mockTaskResponce: ResponseTodolistsAndTasksType<TaskResponseType> = {
       resultCode: 0,

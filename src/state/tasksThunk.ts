@@ -6,7 +6,7 @@ import {
 } from "../api/todolists-tasks-api";
 
 export const getTasks = createAsyncThunk<
-  TaskType[],
+  {tasksArr: TaskType[], todolistId: string},
   string,
   { rejectValue: string }
 >("tasks/getTasks", async (todolistId, { rejectWithValue }) => {
@@ -19,13 +19,13 @@ export const getTasks = createAsyncThunk<
       isDone: apiTask.completed,
     }));
 
-    return formattedTasks;
+    return {tasksArr: formattedTasks, todolistId};
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
 });
 export const createTask = createAsyncThunk<
-  TaskType,
+  { task: TaskType, todolistId: string },
   { todolistId: string; title: string },
   { rejectValue: string }
 >("tasks/createTasks", async ({ todolistId, title }, { rejectWithValue }) => {
@@ -38,21 +38,21 @@ export const createTask = createAsyncThunk<
       isDone: res.data.data.completed,
     };
 
-    return formattedTask;
+    return {task: formattedTask, todolistId};
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
 });
 
 export const deleteTask = createAsyncThunk<
-  string,
+  { todolistId: string; taskId: string },
   { todolistId: string; taskId: string },
   { rejectValue: string }
 >("tasks/deleteTasks", async ({ todolistId, taskId }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.deleteTask(todolistId, taskId);
 
-    return taskId;
+    return {todolistId, taskId};
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
