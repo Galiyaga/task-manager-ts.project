@@ -28,7 +28,7 @@ export const createTask = createAsyncThunk<
   { task: TaskType, todolistId: string },
   { todolistId: string; title: string },
   { rejectValue: string }
->("tasks/createTasks", async ({ todolistId, title }, { rejectWithValue }) => {
+>("tasks/createTask", async ({ todolistId, title }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.createTask(todolistId, title);
 
@@ -48,7 +48,7 @@ export const deleteTask = createAsyncThunk<
   { todolistId: string; taskId: string },
   { todolistId: string; taskId: string },
   { rejectValue: string }
->("tasks/deleteTasks", async ({ todolistId, taskId }, { rejectWithValue }) => {
+>("tasks/deleteTask", async ({ todolistId, taskId }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.deleteTask(todolistId, taskId);
 
@@ -63,7 +63,7 @@ export const updateTask = createAsyncThunk<
   { todolistId: string, taskId: string; model: UpdateTaskModelType },
   { rejectValue: string }
 >(
-  "tasks/updateTasks",
+  "tasks/updateTask",
   async ({ todolistId, taskId, model }, { rejectWithValue }) => {
     try {
       const res = await todolistsAndTasksAPI.updateTask(
