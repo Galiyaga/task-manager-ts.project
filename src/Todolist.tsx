@@ -5,10 +5,11 @@ import { EditableSpan } from "./EditableSpan";
 import { Button, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "./state/store";
-import { addTask } from "./state/tasksSlice";
+import { AppDispatch, AppRootStateType } from "./state/store";
+import {  } from "./state/tasksSlice";
 import { Task } from "./Task";
 import React from "react";
+import { createTask } from "./state/tasksThunk";
 
 export type TaskType = {
   id: string;
@@ -31,7 +32,7 @@ export const Todolist = React.memo((props: PropsType) => {
   const tasksObj = useSelector<AppRootStateType, TaskType[]>(
     (state) => state.tasks[props.id]
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onAllClickHandler = useCallback(
     () => props.changeFilter("all", props.id),
@@ -74,7 +75,7 @@ export const Todolist = React.memo((props: PropsType) => {
       <div>
         <AddItemForm
           addItem={useCallback(
-            (title) => dispatch(addTask({title, todolistId: props.id})),
+            (title) => dispatch(createTask({title, todolistId: props.id})),
             [props.id]
           )}
         />

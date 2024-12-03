@@ -109,7 +109,6 @@ export const UpdateTask = () => {
     const model: UpdateTaskModelType = {
       title: 'Update',
       description: '',
-      completed: false,
       status: 0,
       priority: 1,
       startDate: '',

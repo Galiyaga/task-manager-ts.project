@@ -14,16 +14,14 @@ import {
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import {
-  addTodolist,
-  changeTodolistFilter,
-  changeTodolistTitle,
-  removeTodolist,
+  changeTodolistFilter
 } from "./state/todolistsSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, AppRootStateType } from "./state/store";
 import { useCallback } from "react";
 import { v1 } from "uuid";
+import { createTodolist, deleteTodolist, updateTodolist } from "./state/todolistsThunks";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
@@ -43,9 +41,8 @@ function AppWithRedux() {
   const dispatch = useDispatch<AppDispatch>()
   const todolists = useSelector<AppRootStateType, TodolistType[]>( state => state.todolists)
   
-
   const handleRemoveTodolist = useCallback((id: string) => {
-    dispatch(removeTodolist(id))
+    dispatch(deleteTodolist(id))
   }, [dispatch])
 
   const handleChangeTodolistFilter = useCallback((filter: FilterValuesType, id: string) => {
@@ -53,11 +50,11 @@ function AppWithRedux() {
   }, [dispatch])
 
   const handleAddTodolist = useCallback((title: string, id: string = v1()) => {
-    dispatch(addTodolist({title, id}));
+    dispatch(createTodolist(title));
   }, [dispatch])
 
   const handleChangeTodolistTitle = useCallback((id: string, title: string) => {
-    dispatch(changeTodolistTitle({id, title}));
+    dispatch(updateTodolist({id, title}));
   }, [dispatch])
 
   return (

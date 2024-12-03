@@ -3,7 +3,12 @@ import { TasksStateType } from "../AppWithRedux";
 import { TaskType } from "../Todolist";
 import { v1 } from "uuid";
 import {} from "./todolistsSlice";
-import { createTask, deleteTask, getTasks, updateTask } from "./tasksThunk";
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  updateTasksTitle,
+} from "./tasksThunk";
 import { createTodolist, deleteTodolist } from "./todolistsThunks";
 
 const initialState: TasksStateType = {};
@@ -11,7 +16,17 @@ const initialState: TasksStateType = {};
 const tasksSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {},
+  reducers: {
+    updateTasksStatus(
+      state,
+      action: PayloadAction<{ todolistId: string,
+        taskId: string,
+        isDone: boolean }>
+    ) {
+      const task = state[action.payload.todolistId].find(t=> t.id === action.payload.taskId);
+      if (task) task.isDone = action.payload.isDone;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTasks.fulfilled, (state, action) => {
@@ -25,24 +40,21 @@ const tasksSlice = createSlice({
           action.payload.todolistId
         ].filter((t) => t.id !== action.payload.taskId);
       })
-      .addCase(updateTask.fulfilled, (state, action) => {
+      .addCase(updateTasksTitle.fulfilled, (state, action) => {
         const task = state[action.payload.todolistId].find(
           (t) => t.id === action.payload.taskId
         );
-        if (task) {
-          task.title = action.payload.title;
-          task.isDone = action.payload.completed;
-        }
+        if (task) task.title = action.payload.title;
       })
       .addCase(createTodolist.fulfilled, (state, action) => {
         state[action.payload.id] = [];
       })
       .addCase(deleteTodolist.fulfilled, (state, action) => {
-        delete state[action.payload]
-      })
+        delete state[action.payload];
+      });
   },
 });
 
-export const {} = tasksSlice.actions;
+export const {updateTasksStatus} = tasksSlice.actions;
 
 export const tasksReducer = tasksSlice.reducer;

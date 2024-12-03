@@ -32,7 +32,6 @@ export type ItemDataType = {
 export type TaskResponseType = {
   description: string;
   title: string;
-  completed: boolean;
   status: number;
   priority: number;
   startDate: string;
@@ -43,10 +42,11 @@ export type TaskResponseType = {
   addedDate: string;
 };
 
+export type PartialUpdateTaskModelType = Partial<UpdateTaskModelType>;
+
 export type UpdateTaskModelType = {
   title: string;
   description: string;
-  completed: boolean;
   status: number;
   priority: number;
   startDate: string;
