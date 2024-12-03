@@ -4,6 +4,7 @@ import { TaskType } from "../Todolist";
 import { v1 } from "uuid";
 import {} from "./todolistsSlice";
 import { createTask, deleteTask, getTasks, updateTask } from "./tasksThunk";
+import { createTodolist, deleteTodolist } from "./todolistsThunks";
 
 const initialState: TasksStateType = {};
 
@@ -12,12 +13,6 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(addTodolist, (state, action) => {
-    //     state[action.payload.id] = []
-    // }),
-    // builder.addCase(removeTodolist, (state, action) => {
-    //     delete state[action.payload]
-    // })
     builder
       .addCase(getTasks.fulfilled, (state, action) => {
         state[action.payload.todolistId] = action.payload.tasksArr;
@@ -36,9 +31,15 @@ const tasksSlice = createSlice({
         );
         if (task) {
           task.title = action.payload.title;
-          task.isDone = action.payload.completed
+          task.isDone = action.payload.completed;
         }
-      });
+      })
+      .addCase(createTodolist.fulfilled, (state, action) => {
+        state[action.payload.id] = [];
+      })
+      .addCase(deleteTodolist.fulfilled, (state, action) => {
+        delete state[action.payload]
+      })
   },
 });
 
