@@ -41,6 +41,7 @@ const tasksSlice = createSlice({
         ].filter((t) => t.id !== action.payload.taskId);
       })
       .addCase(updateTasksTitle.fulfilled, (state, action) => {
+        debugger
         const task = state[action.payload.todolistId].find(
           (t) => t.id === action.payload.taskId
         );

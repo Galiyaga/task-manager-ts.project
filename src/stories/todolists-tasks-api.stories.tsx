@@ -40,7 +40,7 @@ export const DeleteTodolist = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const id = "84c8237b-1e29-4788-a3f2-796bbbaf9bb0";
+    const id = "8355452a-ebc0-4004-9035-1badc6c21817";
     todolistsAndTasksAPI.deleteTodolist(id).then((res) => {
       setState(res.data);
     });
@@ -66,7 +66,7 @@ export const GetTasks = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const todolistId = "d3f01eb4-b594-4ff2-b7a1-a00fe717c996";
+    const todolistId = "4aec1cdb-f0d1-48dd-8e85-8b78b356f8c5";
     todolistsAndTasksAPI.getTasks(todolistId).then((res) => {
       setState(res.data.items);
     });
@@ -92,8 +92,8 @@ export const DeleteTask = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const todolistId = "84c8237b-1e29-4788-a3f2-796bbbaf9bb0";
-    const taskId = "";
+    const todolistId = "d3f01eb4-b594-4ff2-b7a1-a00fe717c996";
+    const taskId = "910e709e-cd64-4330-9c20-a71936cbbbb9";
     todolistsAndTasksAPI.deleteTask(todolistId, taskId).then((res) => {
       setState(res.data);
     });
@@ -106,16 +106,9 @@ export const UpdateTask = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const model: UpdateTaskModelType = {
-      title: 'Update',
-      description: '',
-      status: 0,
-      priority: 1,
-      startDate: '',
-      deadline: '',
-    }
-    const todolistId = "d3f01eb4-b594-4ff2-b7a1-a00fe717c996";
-    const taskId = "910e709e-cd64-4330-9c20-a71936cbbbb9";
+    const model = {title: "Update Title"} as UpdateTaskModelType
+    const todolistId = "4aec1cdb-f0d1-48dd-8e85-8b78b356f8c5";
+    const taskId = "470241a4-b383-454c-909e-1427d6656cd8";
     todolistsAndTasksAPI.updateTask(todolistId, taskId, model).then((res) => {
       setState(res.data);
     });
@@ -123,3 +116,5 @@ export const UpdateTask = () => {
 
   return <div>{JSON.stringify(state)}</div>;
 };
+
+

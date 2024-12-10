@@ -6,7 +6,7 @@ import { Button, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppRootStateType } from "./state/store";
-import {  } from "./state/tasksSlice";
+import {} from "./state/tasksSlice";
 import { Task } from "./Task";
 import React from "react";
 import { createTask } from "./state/tasksThunk";
@@ -27,11 +27,11 @@ type PropsType = {
 };
 
 export const Todolist = React.memo((props: PropsType) => {
-  console.log("Todolist is called");
 
   const tasksObj = useSelector<AppRootStateType, TaskType[]>(
     (state) => state.tasks[props.id]
   );
+  
   const dispatch = useDispatch<AppDispatch>();
 
   const onAllClickHandler = useCallback(
@@ -55,6 +55,11 @@ export const Todolist = React.memo((props: PropsType) => {
     [props.changeTodolistTitle, props.id]
   );
 
+  const handleAddTask = useCallback(
+    (title: string) => { 
+      dispatch(createTask({ todolistId: props.id, title }))},
+    [dispatch, props.id]
+  );
   let tasksForTodoList = tasksObj;
 
   if (props.filter === "completed") {
@@ -73,15 +78,10 @@ export const Todolist = React.memo((props: PropsType) => {
         </IconButton>
       </h3>
       <div>
-        <AddItemForm
-          addItem={useCallback(
-            (title) => dispatch(createTask({title, todolistId: props.id})),
-            [props.id]
-          )}
-        />
+        <AddItemForm addItem={handleAddTask} />
         <ul>
-          {tasksForTodoList.map((task) => {
-            return <Task task={task} todolistId={props.id} key={task.id} />;
+          {tasksForTodoList.map((task, index) => {
+            return <Task task={task} todolistId={props.id} key={index} />;
           })}
         </ul>
         <div className="">

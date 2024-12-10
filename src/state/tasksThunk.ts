@@ -34,8 +34,8 @@ export const createTask = createAsyncThunk<
     const res = await todolistsAndTasksAPI.createTask(todolistId, title);
 
     const formattedTask: TaskType = {
-      id: res.data.data.id,
-      title: res.data.data.title,
+      id: res.data.data.item.id,
+      title: res.data.data.item.title,
       isDone: false,
     };
 

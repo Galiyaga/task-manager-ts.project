@@ -29,6 +29,10 @@ export type ItemDataType = {
   item: APITodolistType;
 };
 
+export type CreateTaskResponseDataType = {
+  item: TaskResponseType;
+};
+
 export type TaskResponseType = {
   description: string;
   title: string;
@@ -81,19 +85,19 @@ export const todolistsAndTasksAPI = {
     return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`);
   },
   createTask(todolistId: string, title: string) {
-    return instance.post<ResponseTodolistsAndTasksType<TaskResponseType>>(
+    return instance.post<ResponseTodolistsAndTasksType<CreateTaskResponseDataType>>(
       `/todo-lists/${todolistId}/tasks`,
       { title: title }
     );
   },
   deleteTask(todolistId: string, taskId: string) {
     return instance.delete<ResponseTodolistsAndTasksType>(
-      `todo-lists/${todolistId}/tasks/+ ${taskId}`
+      `todo-lists/${todolistId}/tasks/${taskId}`
     );
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    return instance.put<ResponseTodolistsAndTasksType<TaskResponseType>>(
-      `todo-lists/${todolistId}/tasks/+ ${taskId}`
+    return instance.put<ResponseTodolistsAndTasksType<CreateTaskResponseDataType>>(
+      `todo-lists/${todolistId}/tasks/${taskId}`
     );
   },
 };

@@ -1,5 +1,6 @@
 import { AxiosHeaders, AxiosResponse } from "axios";
 import {
+  CreateTaskResponseDataType,
   ResponseTodolistsAndTasksType,
   TaskResponseType,
   todolistsAndTasksAPI,
@@ -8,7 +9,12 @@ import {
 import { mockConfig } from "./todolistsThunks.test";
 import { GetTasksResponseType } from "../api/todolists-tasks-api";
 import { TaskType } from "../Todolist";
-import { createTask, deleteTask, getTasks, updateTasksTitle } from "./tasksThunk";
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  updateTasksTitle,
+} from "./tasksThunk";
 
 jest.mock("../api/todolists-tasks-api");
 
@@ -101,22 +107,25 @@ describe("getTasks thunk", () => {
 
 describe("createTask thunk", () => {
   it("dispatches fulfiiled action with new tasks on seccess", async () => {
-    const mockTaskResponce: ResponseTodolistsAndTasksType<TaskResponseType> = {
-      resultCode: 0,
-      messages: [],
-      data: {
-        description: "Test Task",
-        title: taskTitle,
-        status: 0,
-        priority: 1,
-        startDate: "",
-        deadline: "",
-        id: taskId,
-        todoListId: todolistId,
-        order: 0,
-        addedDate: "",
-      },
-    };
+    const mockTaskResponce: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> =
+      {
+        resultCode: 0,
+        messages: [],
+        data: {
+          item: {
+            description: "Test Task",
+            title: taskTitle,
+            status: 0,
+            priority: 1,
+            startDate: "",
+            deadline: "",
+            id: taskId,
+            todoListId: todolistId,
+            order: 0,
+            addedDate: "",
+          },
+        },
+      };
 
     const mockResponse: AxiosResponse<typeof mockTaskResponce> = {
       data: mockTaskResponce,
@@ -251,20 +260,22 @@ describe("updateTasksTitle thunk", () => {
   };
 
   it("dispatches fulfiiled action with update task`s title on seccess", async () => {
-    const mockTaskResponce: ResponseTodolistsAndTasksType<TaskResponseType> = {
+    const mockTaskResponce: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> = {
       resultCode: 0,
       messages: [],
       data: {
-        description: "Test Task",
-        title: updateTaskTitle,
-        status: 0,
-        priority: 1,
-        startDate: "",
-        deadline: "",
-        id: taskId,
-        todoListId: todolistId,
-        order: 0,
-        addedDate: "",
+        item: {
+          description: "Test Task",
+          title: updateTaskTitle,
+          status: 0,
+          priority: 1,
+          startDate: "",
+          deadline: "",
+          id: taskId,
+          todoListId: todolistId,
+          order: 0,
+          addedDate: "",
+        },
       },
     };
 
@@ -281,7 +292,11 @@ describe("updateTasksTitle thunk", () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    const result = await updateTasksTitle(mockArgs)(dispatch, getState, undefined);
+    const result = await updateTasksTitle(mockArgs)(
+      dispatch,
+      getState,
+      undefined
+    );
 
     expect(dispatch).toHaveBeenCalledWith(
       updateTasksTitle.pending(expect.anything(), mockArgs)
@@ -292,7 +307,7 @@ describe("updateTasksTitle thunk", () => {
         {
           todolistId: "test-totdolist-id",
           taskId: "task-1",
-          title: "Update Task 1 Title"
+          title: "Update Task 1 Title",
         },
         expect.anything(),
         mockArgs
@@ -314,7 +329,11 @@ describe("updateTasksTitle thunk", () => {
     const dispatch = jest.fn();
     const getState = jest.fn();
 
-    const result = await updateTasksTitle(mockArgs)(dispatch, getState, undefined);
+    const result = await updateTasksTitle(mockArgs)(
+      dispatch,
+      getState,
+      undefined
+    );
 
     expect(dispatch).toHaveBeenCalledWith(
       updateTasksTitle.pending(expect.anything(), mockArgs)
@@ -322,4 +341,3 @@ describe("updateTasksTitle thunk", () => {
     expect(result.payload).toEqual("Failed to update task`s title");
   });
 });
-

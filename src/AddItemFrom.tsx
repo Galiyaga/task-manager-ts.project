@@ -8,25 +8,27 @@ type ItemFormPropsType = {
 };
 
 export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
-  console.log('AddItemForm is called')
 
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newItemTitle, setNewItemTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.target.value);
+    setNewItemTitle(e.target.value);
   };
 
-  const handleAddTasks = () => {
-    if (newTaskTitle.trim().length) {
-      props.addItem(newTaskTitle.trim());
-      setNewTaskTitle("");
-    } else setError("Заполните поле");
+  const handleAddItem = () => {
+    if (newItemTitle.trim().length) {
+      console.log("Adding item:", newItemTitle.trim());
+      props.addItem(newItemTitle.trim());
+      setNewItemTitle("");
+    } else {
+      setError("Заполните поле")
+    }
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (error !== null) setError(null);
-    e.charCode === 13 && handleAddTasks();
+    e.charCode === 13 && handleAddItem();
   };
 
   return (
@@ -34,7 +36,7 @@ export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
     <TextField 
           type="text"
           required
-          value={newTaskTitle}
+          value={newItemTitle}
           onChange={onChangeHandler}
           onKeyPress={onKeyPressHandler}
           variant="outlined"
@@ -42,7 +44,7 @@ export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
           error={!!error}
           helperText={error}
         />
-        <IconButton onClick={handleAddTasks} color="primary">
+        <IconButton onClick={handleAddItem} color="primary">
           <ControlPoint />
         </IconButton>
     </div>
