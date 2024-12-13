@@ -126,8 +126,5 @@ export const authAPI = {
   },
   logout() {
     return instance.delete<ResponseTodolistsAndTasksType>(`auth/login`)
-  },
-  me() {
-    return instance.get<ResponseTodolistsAndTasksType<authResponseType>>(`/auth/me`)
   }
 }
