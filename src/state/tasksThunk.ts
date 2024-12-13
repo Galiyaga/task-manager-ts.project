@@ -4,7 +4,7 @@ import {
   PartialUpdateTaskModelType,
   todolistsAndTasksAPI,
   UpdateTaskModelType,
-} from "../api/todolists-tasks-api";
+} from "../api/api";
 
 export const getTasks = createAsyncThunk<
   { tasksArr: TaskType[]; todolistId: string },
@@ -67,6 +67,10 @@ export const updateTasksTitle = createAsyncThunk<
   "tasks/updateTasksTitle",
   async ({ todolistId, taskId, model }, { rejectWithValue }) => {
     try {
+      console.log("todolistId: ", todolistId);
+      console.log("taskId: ", taskId);
+      console.log("model: ", model);
+
       const res = await todolistsAndTasksAPI.updateTask(
         todolistId,
         taskId,

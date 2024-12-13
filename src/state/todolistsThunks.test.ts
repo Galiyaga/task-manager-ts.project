@@ -4,7 +4,7 @@ import {
   ItemDataType,
   ResponseTodolistsAndTasksType,
   todolistsAndTasksAPI,
-} from "../api/todolists-tasks-api";
+} from "../api/api";
 import {
   createTodolist,
   deleteTodolist,

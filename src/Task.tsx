@@ -8,7 +8,7 @@ import React from "react";
 import { deleteTask, updateTasksTitle } from "./state/tasksThunk";
 import { AppDispatch } from "./state/store";
 import { updateTasksStatus } from "./state/tasksSlice";
-import { UpdateTaskModelType } from "./api/todolists-tasks-api";
+import { UpdateTaskModelType } from "./api/api";
 
 export type TaskPropsType = {
   todolistId: string;
@@ -36,7 +36,7 @@ export const Task = React.memo((props: TaskPropsType) => {
         updateTasksTitle({
           taskId: props.task.id,
           todolistId: props.todolistId,
-          model: {title: newTitle} as UpdateTaskModelType ,
+          model: { title: newTitle } as UpdateTaskModelType,
         })
       );
     },

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { todolistsAndTasksAPI, UpdateTaskModelType } from "../api/todolists-tasks-api";
+import { todolistsAndTasksAPI, UpdateTaskModelType } from "../api/api";
 
 export default {
   title: "API",
@@ -40,7 +40,7 @@ export const DeleteTodolist = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const id = "8355452a-ebc0-4004-9035-1badc6c21817";
+    const id = "cb2a15bc-6753-46a8-885a-aeb735ade7f1";
     todolistsAndTasksAPI.deleteTodolist(id).then((res) => {
       setState(res.data);
     });
@@ -66,7 +66,7 @@ export const GetTasks = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const todolistId = "4aec1cdb-f0d1-48dd-8e85-8b78b356f8c5";
+    const todolistId = "d56fe210-1cbe-4f58-b581-a82ec651a26e";
     todolistsAndTasksAPI.getTasks(todolistId).then((res) => {
       setState(res.data.items);
     });
@@ -106,7 +106,7 @@ export const UpdateTask = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const model = {title: "Update Title"} as UpdateTaskModelType
+    const model = { title: "Update Title" } as UpdateTaskModelType;
     const todolistId = "4aec1cdb-f0d1-48dd-8e85-8b78b356f8c5";
     const taskId = "470241a4-b383-454c-909e-1427d6656cd8";
     todolistsAndTasksAPI.updateTask(todolistId, taskId, model).then((res) => {
@@ -116,5 +116,3 @@ export const UpdateTask = () => {
 
   return <div>{JSON.stringify(state)}</div>;
 };
-
-

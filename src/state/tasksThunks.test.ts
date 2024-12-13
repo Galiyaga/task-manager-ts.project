@@ -5,9 +5,9 @@ import {
   TaskResponseType,
   todolistsAndTasksAPI,
   UpdateTaskModelType,
-} from "../api/todolists-tasks-api";
+} from "../api/api";
 import { mockConfig } from "./todolistsThunks.test";
-import { GetTasksResponseType } from "../api/todolists-tasks-api";
+import { GetTasksResponseType } from "../api/api";
 import { TaskType } from "../Todolist";
 import {
   createTask,
@@ -36,13 +36,14 @@ const mockForDeleteTask = {
 };
 
 describe("getTasks thunk", () => {
-  const mockTasksResponce: GetTasksResponseType = {
+  const mockTasksResponse: GetTasksResponseType = {
     error: null,
     totalCount: 1,
     items: [
       {
         description: "Test Task",
         title: taskTitle,
+        completed: false,
         status: 0,
         priority: 1,
         startDate: "",
@@ -55,8 +56,8 @@ describe("getTasks thunk", () => {
     ],
   };
 
-  const mockResponse: AxiosResponse<typeof mockTasksResponce> = {
-    data: mockTasksResponce,
+  const mockResponse: AxiosResponse<typeof mockTasksResponse> = {
+    data: mockTasksResponse,
     status: 200,
     statusText: "OK",
     headers: new AxiosHeaders(),
@@ -107,7 +108,7 @@ describe("getTasks thunk", () => {
 
 describe("createTask thunk", () => {
   it("dispatches fulfiiled action with new tasks on seccess", async () => {
-    const mockTaskResponce: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> =
+    const mockTaskResponse: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> =
       {
         resultCode: 0,
         messages: [],
@@ -115,6 +116,7 @@ describe("createTask thunk", () => {
           item: {
             description: "Test Task",
             title: taskTitle,
+            completed: false,
             status: 0,
             priority: 1,
             startDate: "",
@@ -127,8 +129,8 @@ describe("createTask thunk", () => {
         },
       };
 
-    const mockResponse: AxiosResponse<typeof mockTaskResponce> = {
-      data: mockTaskResponce,
+    const mockResponse: AxiosResponse<typeof mockTaskResponse> = {
+      data: mockTaskResponse,
       status: 200,
       statusText: "OK",
       headers: new AxiosHeaders(),
@@ -182,14 +184,14 @@ describe("createTask thunk", () => {
 
 describe("deleteTask thunk", () => {
   it("dispatches fulfiiled action with from the task ID to be deleted on seccess", async () => {
-    const mockTaskResponce: ResponseTodolistsAndTasksType = {
+    const mockTaskResponse: ResponseTodolistsAndTasksType = {
       resultCode: 0,
       messages: [],
       data: {},
     };
 
-    const mockResponse: AxiosResponse<typeof mockTaskResponce> = {
-      data: mockTaskResponce,
+    const mockResponse: AxiosResponse<typeof mockTaskResponse> = {
+      data: mockTaskResponse,
       status: 200,
       statusText: "OK",
       headers: new AxiosHeaders(),
@@ -256,31 +258,33 @@ describe("updateTasksTitle thunk", () => {
   const mockArgs = {
     todolistId: todolistId,
     taskId: taskId,
-    model: mockUpdateTaskModel,
+    model: { title: "Update Task 1 Title" } as UpdateTaskModelType,
   };
 
   it("dispatches fulfiiled action with update task`s title on seccess", async () => {
-    const mockTaskResponce: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> = {
-      resultCode: 0,
-      messages: [],
-      data: {
-        item: {
-          description: "Test Task",
-          title: updateTaskTitle,
-          status: 0,
-          priority: 1,
-          startDate: "",
-          deadline: "",
-          id: taskId,
-          todoListId: todolistId,
-          order: 0,
-          addedDate: "",
+    const mockTaskResponse: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> =
+      {
+        resultCode: 0,
+        messages: [],
+        data: {
+          item: {
+            description: "Test Task",
+            title: updateTaskTitle,
+            completed: false,
+            status: 0,
+            priority: 1,
+            startDate: "",
+            deadline: "",
+            id: taskId,
+            todoListId: todolistId,
+            order: 0,
+            addedDate: "",
+          },
         },
-      },
-    };
+      };
 
-    const mockResponse: AxiosResponse<typeof mockTaskResponce> = {
-      data: mockTaskResponce,
+    const mockResponse: AxiosResponse<typeof mockTaskResponse> = {
+      data: mockTaskResponse,
       status: 200,
       statusText: "OK",
       headers: new AxiosHeaders(),
