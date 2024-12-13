@@ -4,13 +4,13 @@ import {
   ItemDataType,
   ResponseTodolistsAndTasksType,
   todolistsAndTasksAPI,
-} from "../api/api";
+} from "../../api/api";
 import {
   createTodolist,
   deleteTodolist,
   fetchTodolist,
   updateTodolist,
-} from "./todolistsThunks";
+} from "../todolistsThunks";
 
 jest.mock("../api/api");
 

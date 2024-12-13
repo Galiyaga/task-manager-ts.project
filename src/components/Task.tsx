@@ -3,7 +3,7 @@ import { TaskType } from "./Todolist";
 import { ChangeEvent, useCallback } from "react";
 import { Delete } from "@mui/icons-material";
 import { Checkbox, IconButton } from "@mui/material";
-import { EditableSpan } from "./EditableSpan";
+import { EditableSpan } from "./components/EditableSpan";
 import React from "react";
 import { deleteTask, updateTasksTitle } from "./state/tasksThunk";
 import { AppDispatch } from "./state/store";

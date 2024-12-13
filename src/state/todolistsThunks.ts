@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { todolistsAndTasksAPI } from "../api/api";
-import { TodolistType } from "../AppWithRedux";
+import { TodolistType } from "../components/AppWithRedux";
 
 export const fetchTodolist = createAsyncThunk<
   TodolistType[],

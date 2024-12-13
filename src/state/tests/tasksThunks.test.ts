@@ -5,16 +5,16 @@ import {
   TaskResponseType,
   todolistsAndTasksAPI,
   UpdateTaskModelType,
-} from "../api/api";
-import { mockConfig } from "./todolistsThunks.test";
-import { GetTasksResponseType } from "../api/api";
-import { TaskType } from "../Todolist";
+} from "../../api/api";
+import { mockConfig } from "../tests/todolistsThunks.test";
+import { GetTasksResponseType } from "../../api/api";
+import { TaskType } from "../../components/Todolist";
 import {
   createTask,
   deleteTask,
   getTasks,
   updateTasksTitle,
-} from "./tasksThunk";
+} from "../tasksThunk";
 
 jest.mock("../api/api");
 

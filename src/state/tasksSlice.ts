@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TasksStateType } from "../AppWithRedux";
+import { TasksStateType } from "../components/AppWithRedux";
 import {} from "./todolistsSlice";
 import {
   createTask,

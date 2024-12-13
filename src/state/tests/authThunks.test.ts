@@ -4,9 +4,9 @@ import {
   loginPropertiesType,
   loginResponseType,
   ResponseTodolistsAndTasksType,
-} from "../api/api";
-import { mockConfig } from "./todolistsThunks.test";
-import { loginThunk, logoutThunk } from "./authThunk";
+} from "../../api/api";
+import { mockConfig } from "../tests/todolistsThunks.test";
+import { loginThunk, logoutThunk } from "../authThunk";
 
 jest.mock("../api/api");
 

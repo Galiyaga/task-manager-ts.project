@@ -1,12 +1,12 @@
 import { v1 } from "uuid";
-import { FilterValuesType, TodolistType } from "../AppWithRedux";
-import { changeTodolistFilter, todolistsReducer } from "./todolistsSlice";
+import { FilterValuesType, TodolistType } from "../../components/AppWithRedux";
+import { changeTodolistFilter, todolistsReducer } from "../todolistsSlice";
 import {
   createTodolist,
   deleteTodolist,
   fetchTodolist,
   updateTodolist,
-} from "./todolistsThunks";
+} from "../todolistsThunks";
 
 let todolistId1 = v1();
 let todolistId2 = v1();

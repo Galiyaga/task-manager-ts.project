@@ -1,7 +1,7 @@
 import { TasksStateType, TodolistType } from "../AppWithRedux";
-import { tasksReducer } from "./tasksSlice";
-import { todolistsReducer } from "./todolistsSlice";
-import { createTodolist, deleteTodolist } from "./todolistsThunks";
+import { tasksReducer } from "../tasksSlice";
+import { todolistsReducer } from "../todolistsSlice";
+import { createTodolist, deleteTodolist } from "../todolistsThunks";
 
 describe("todolists-tasks reducer", () => {
   it("ids should be equals", () => {

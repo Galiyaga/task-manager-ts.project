@@ -1,13 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TasksStateType } from "../AppWithRedux";
+import { createSlice } from "@reduxjs/toolkit";
 import {} from "./todolistsSlice";
-import {
-  createTask,
-  deleteTask,
-  getTasks,
-  updateTasksTitle,
-} from "./tasksThunk";
-import { createTodolist, deleteTodolist } from "./todolistsThunks";
 import { loginThunk, logoutThunk } from "./authThunk";
 
 const initialState = {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FilterValuesType, TodolistType } from "../AppWithRedux";
+import { FilterValuesType, TodolistType } from "../components/AppWithRedux";
 import {
   createTodolist,
   deleteTodolist,
