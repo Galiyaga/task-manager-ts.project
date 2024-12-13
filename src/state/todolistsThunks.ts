@@ -1,4 +1,4 @@
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { todolistsAndTasksAPI } from "../api/api";
 import { TodolistType } from "../AppWithRedux";
 

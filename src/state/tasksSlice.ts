@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TasksStateType } from "../AppWithRedux";
-import { TaskType } from "../Todolist";
-import { v1 } from "uuid";
 import {} from "./todolistsSlice";
 import {
   createTask,

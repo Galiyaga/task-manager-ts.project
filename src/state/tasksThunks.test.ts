@@ -16,7 +16,7 @@ import {
   updateTasksTitle,
 } from "./tasksThunk";
 
-jest.mock("../api/todolists-tasks-api");
+jest.mock("../api/api");
 
 const mockedtodolistsAndTasksAPI = todolistsAndTasksAPI as jest.Mocked<
   typeof todolistsAndTasksAPI

@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, Tuple } from '@reduxjs/toolkit'
 import { tasksReducer } from "./tasksSlice";
 import { todolistsReducer } from "./todolistsSlice";
+import { successLoginMiddleware } from './middleware';
 
 const rootReducer = {
     todolists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    middleware: () => new Tuple(successLoginMiddleware)
 }
 
 export type AppRootStateType = ReturnType<typeof store.getState>
