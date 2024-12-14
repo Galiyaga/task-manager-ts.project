@@ -1,5 +1,5 @@
 import { ControlPoint } from "@mui/icons-material";
-import { Button, IconButton, TextField } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import React from "react";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
@@ -18,7 +18,6 @@ export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
 
   const handleAddItem = () => {
     if (newItemTitle.trim().length) {
-      console.log("Adding item:", newItemTitle.trim());
       props.addItem(newItemTitle.trim());
       setNewItemTitle("");
     } else {

@@ -12,7 +12,7 @@ import {
   updateTodolist,
 } from "../todolistsThunks";
 
-jest.mock("../api/api");
+jest.mock("../../api/api");
 
 const mockedtodolistsAndTasksAPI = todolistsAndTasksAPI as jest.Mocked<
   typeof todolistsAndTasksAPI

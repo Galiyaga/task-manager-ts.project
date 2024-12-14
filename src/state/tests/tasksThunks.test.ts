@@ -2,7 +2,6 @@ import { AxiosHeaders, AxiosResponse } from "axios";
 import {
   CreateTaskResponseDataType,
   ResponseTodolistsAndTasksType,
-  TaskResponseType,
   todolistsAndTasksAPI,
   UpdateTaskModelType,
 } from "../../api/api";
@@ -16,7 +15,7 @@ import {
   updateTasksTitle,
 } from "../tasksThunk";
 
-jest.mock("../api/api");
+jest.mock("../../api/api");
 
 const mockedtodolistsAndTasksAPI = todolistsAndTasksAPI as jest.Mocked<
   typeof todolistsAndTasksAPI

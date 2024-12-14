@@ -1,17 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import AppWithRedux from './AppWithRedux';
-import { Provider } from 'react-redux';
-import { store } from './state/store';
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import AppWithRedux from "./components/AppWithRedux";
+import { Provider } from "react-redux";
+import { store } from "./state/store";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Layout from "./components/layout/Layout";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <Provider store={store}>
-    <AppWithRedux />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Login />} />
+          <Route path="/todolist" element={<AppWithRedux />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </Provider>
 );
 

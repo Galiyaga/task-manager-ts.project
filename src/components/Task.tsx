@@ -3,12 +3,12 @@ import { TaskType } from "./Todolist";
 import { ChangeEvent, useCallback } from "react";
 import { Delete } from "@mui/icons-material";
 import { Checkbox, IconButton } from "@mui/material";
-import { EditableSpan } from "./components/EditableSpan";
+import { EditableSpan } from "./EditableSpan";
 import React from "react";
-import { deleteTask, updateTasksTitle } from "./state/tasksThunk";
-import { AppDispatch } from "./state/store";
-import { updateTasksStatus } from "./state/tasksSlice";
-import { UpdateTaskModelType } from "./api/api";
+import { deleteTask, updateTasksTitle } from "../state/tasksThunk";
+import { AppDispatch } from "../state/store";
+import { updateTasksStatus } from "../state/tasksSlice";
+import { UpdateTaskModelType } from "../api/api";
 
 export type TaskPropsType = {
   todolistId: string;

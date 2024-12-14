@@ -1,5 +1,5 @@
-import { Task, TaskPropsType } from "./Task";
-import { ReduxStoreProviderDecorater } from "./stories/ReduxStoreProviderDecorater";
+import { Task, TaskPropsType } from "../components/Task";
+import { ReduxStoreProviderDecorater } from "./ReduxStoreProviderDecorater";
 import { Meta } from "@storybook/react/*";
 
 export default {

@@ -1,5 +1,5 @@
 // import { TasksStateType } from "../App";
-import { TasksStateType } from "../AppWithRedux";
+import { TasksStateType } from "../../components/AppWithRedux";
 import { tasksReducer, updateTasksStatus } from "../tasksSlice";
 import {
   createTask,

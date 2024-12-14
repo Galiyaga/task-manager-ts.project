@@ -8,7 +8,7 @@ import {
 import { mockConfig } from "../tests/todolistsThunks.test";
 import { loginThunk, logoutThunk } from "../authThunk";
 
-jest.mock("../api/api");
+jest.mock("../../api/api");
 
 const mockedAuthAPI = authAPI as jest.Mocked<typeof authAPI>;
 

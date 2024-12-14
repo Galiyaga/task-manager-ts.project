@@ -4,7 +4,7 @@ import { todolistsReducer } from "../state/todolistsSlice";
 import { tasksReducer } from "../state/tasksSlice";
 import { combineReducers, createStore } from "redux";
 import { v1 } from "uuid";
-import { TasksStateType, TodolistType } from "../AppWithRedux";
+import { TasksStateType, TodolistType } from "../components/AppWithRedux";
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,

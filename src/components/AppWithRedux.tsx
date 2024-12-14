@@ -1,4 +1,3 @@
-import "./App.css";
 import { TaskType, Todolist } from "./Todolist";
 import { AddItemForm } from "../components/AddItemFrom";
 import {
@@ -73,15 +72,7 @@ function AppWithRedux() {
 
   return (
     <div className="App">
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton>
-            <Menu />
-          </IconButton>
-          <Typography variant="h6">News</Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
+      
       <Container fixed>
         <Grid container style={{ padding: "20px" }}>
           <AddItemForm addItem={handleAddTodolist} />
