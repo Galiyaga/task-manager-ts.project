@@ -3,23 +3,46 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import AppWithRedux from "./components/AppWithRedux";
 import { Provider } from "react-redux";
-import { store } from "./state/store";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AppRootStateType, store } from "./state/store";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Layout from "./components/layout/Layout";
+import { useSelector } from "react-redux";
+
+export default function AppRoute() {
+  const isLogged = useSelector(
+    (state: AppRootStateType) => state.auth.isLogged
+  );
+
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={<Navigate to={isLogged ? "/todolists" : "/login"} />}
+        />
+        <Route
+          index
+          path="/login"
+          element={isLogged ? <Navigate to="/todolists" /> : <Login />}
+        />
+        <Route
+          path="/todolists"
+          element={isLogged ? <AppWithRedux /> : <Navigate to="/login" />}
+        />
+      </Route>
+    </Routes>
+  );
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Login />} />
-          <Route path="/todolist" element={<AppWithRedux />} />
-        </Route>
-      </Routes>
+      <AppRoute />
     </BrowserRouter>
   </Provider>
 );

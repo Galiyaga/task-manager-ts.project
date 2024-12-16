@@ -18,6 +18,7 @@ describe("login thunk", () => {
     messages: ["1"],
     data: {
       userId: 1,
+      token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
     },
   };
 
@@ -46,9 +47,15 @@ describe("login thunk", () => {
       loginThunk.pending(expect.anything(), loginData)
     );
     expect(dispatch).toHaveBeenCalledWith(
-      loginThunk.fulfilled(undefined, expect.anything(), loginData)
+      loginThunk.fulfilled({
+        userId: '1',
+        token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
+      }, expect.anything(), loginData)
     );
-    expect(result.payload).toEqual(undefined);
+    expect(result.payload).toEqual({
+      userId: '1',
+      token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
+    });
 
   });
   it("dispatches rejected action with error authorization message ", async () => {

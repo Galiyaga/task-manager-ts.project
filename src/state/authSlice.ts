@@ -2,9 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import {} from "./todolistsSlice";
 import { loginThunk, logoutThunk } from "./authThunk";
 
-const initialState = {
-  isLogged: false,
-};
+const loadAuthState = () => {
+  const token = localStorage.getItem("token")
+  const userId = localStorage.getItem("userId")
+
+  return token && userId ? {isLogged: true, userId, token} : {isLogged: false, userId: null, token: null}
+}
+
+const initialState = loadAuthState()
 
 const authSlice = createSlice({
   name: "auth",
@@ -13,14 +18,21 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(loginThunk.fulfilled, (state, action) => {
-      initialState.isLogged = true;
+      state.isLogged = true;
+      state.userId = action.payload.userId
+      state.token = action.payload.token
     })
     .addCase(logoutThunk.fulfilled, (state, action) => {
-      initialState.isLogged = false;
+      state.isLogged = false;
+      state.userId = null
+      state.token = null
+
+      localStorage.removeItem("token")
+      localStorage.removeItem("userId")
     });
   },
 });
 
 export const {} = authSlice.actions;
 
-export const tasksReducer = authSlice.reducer;
+export const authReducer = authSlice.reducer;

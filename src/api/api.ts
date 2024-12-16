@@ -72,7 +72,8 @@ export type loginPropertiesType = {
 }
 
 export type loginResponseType = {
-  userId: number
+  userId: number,
+  token: string
 }
 
 export type authResponseType = {

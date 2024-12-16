@@ -4,7 +4,7 @@ import { fetchTodolist } from "./todolistsThunks";
 import { AppDispatch } from "./store";
 
 export const loginThunk = createAsyncThunk<
-  void,
+  {userId: string, token: string},
   loginPropertiesType,
   { rejectValue: string }
 >("auth/loginThunk", async (data, { rejectWithValue }) => {
@@ -15,6 +15,12 @@ export const loginThunk = createAsyncThunk<
         `Error login: resultCode returned with value ${res.data.resultCode}`
       );
     }
+    const userId = res.data.data.userId.toString()
+    const token = res.data.data.token
+    localStorage.setItem("userId", userId.toString())
+    localStorage.setItem("token", token)
+
+    return { userId, token}
   } catch (error: any) {
     return rejectWithValue(error.message);
   }

@@ -15,6 +15,7 @@ import { loginThunk } from "../state/authThunk";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../state/store";
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,8 +68,9 @@ export default function Login(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  //TODO: подумать над тем, что использовать формдату
+  //TODO: подумать над тем, чтоб использовать формдату
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   if (emailError || passwordError) {
   //     event.preventDefault();
@@ -118,13 +120,14 @@ export default function Login(props: { disableCustomTheme?: boolean }) {
 
   const handleLogin = useCallback(
       () => {
-        debugger
         const isValid = validateInputs()
         if (isValid) {
           dispatch(loginThunk({ email: email,
             password: password,
             rememberMe: remember,
             captcha: false }));
+            
+            navigate("/todolists")
         }
         },
       [dispatch, email, password, remember]
