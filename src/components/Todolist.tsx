@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { FilterValuesType } from "./AppWithRedux";
 import { AddItemForm } from "./AddItemFrom";
 import { EditableSpan } from "./EditableSpan";
@@ -9,7 +9,7 @@ import { AppDispatch, AppRootStateType } from "../state/store";
 import {} from "../state/tasksSlice";
 import { Task } from "./Task";
 import React from "react";
-import { createTask } from "../state/tasksThunk";
+import { createTask, getTasks } from "../state/tasksThunk";
 
 export type TaskType = {
   id: string;
@@ -27,11 +27,14 @@ type PropsType = {
 };
 
 export const Todolist = React.memo((props: PropsType) => {
-  const tasksObj = useSelector<AppRootStateType, TaskType[]>(
-    (state) => state.tasks[props.id]
-  );
-
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getTasks(props.id));
+  }, [dispatch, props.id]); 
+  
+  const tasksObj = useSelector<AppRootStateType, TaskType[]>(
+    (state) => state.tasks[props.id] ?? []
+  );
 
   const onAllClickHandler = useCallback(
     () => props.changeFilter("all", props.id),

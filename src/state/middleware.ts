@@ -6,7 +6,8 @@ export const successLoginMiddleware = createListenerMiddleware();
 
 successLoginMiddleware.startListening({
   actionCreator: loginThunk.fulfilled,
-  effect: async (action, listenerApi) => {
+  effect: async (_action, listenerApi) => {
+    debugger
     try {
       await listenerApi.dispatch(fetchTodolist());
     } catch (error) {
