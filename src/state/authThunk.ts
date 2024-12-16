@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authAPI, loginPropertiesType } from "../api/api";
-import { fetchTodolist } from "./todolistsThunks";
-import { AppDispatch } from "./store";
 
 export const loginThunk = createAsyncThunk<
   {userId: string, token: string},

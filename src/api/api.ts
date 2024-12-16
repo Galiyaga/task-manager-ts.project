@@ -1,17 +1,61 @@
-import axios from "axios";
+import { baseInstance } from "./baseInstance";
 
-const settings = {
-  withCredentials: true,
-  headers: {
-    "API-KEY": "b983fdd2-6d82-4150-88ca-bd6a10af1e07",
+// request
+export const todolistsAndTasksAPI = {
+  getTodolists() {
+    return baseInstance.get<APITodolistType[]>("todo-lists");
+  },
+  createTodolist(title: string) {
+    return baseInstance.post<ResponseTodolistsAndTasksType<ItemDataType>>(
+      "todo-lists",
+      { title: title }
+    );
+  },
+  deleteTodolist(id: string) {
+    return baseInstance.delete<ResponseTodolistsAndTasksType>(
+      `todo-lists/${id}`
+    );
+  },
+  updateTodolist(id: string, title: string) {
+    return baseInstance.put<ResponseTodolistsAndTasksType>(`todo-lists/${id}`, {
+      title: title,
+    });
+  },
+  getTasks(todolistId: string) {
+    return baseInstance.get<GetTasksResponseType>(
+      `todo-lists/${todolistId}/tasks`
+    );
+  },
+  createTask(todolistId: string, title: string) {
+    return baseInstance.post<
+      ResponseTodolistsAndTasksType<CreateTaskResponseDataType>
+    >(`/todo-lists/${todolistId}/tasks`, { title: title });
+  },
+  deleteTask(todolistId: string, taskId: string) {
+    return baseInstance.delete<ResponseTodolistsAndTasksType>(
+      `todo-lists/${todolistId}/tasks/${taskId}`
+    );
+  },
+  updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+    return baseInstance.put<
+      ResponseTodolistsAndTasksType<CreateTaskResponseDataType>
+    >(`todo-lists/${todolistId}/tasks/${taskId}`, model);
   },
 };
 
-const instance = axios.create({
-  baseURL: "https://social-network.samuraijs.com/api/1.1/",
-  ...settings,
-});
+export const authAPI = {
+  login(data: loginPropertiesType) {
+    return baseInstance.post<ResponseTodolistsAndTasksType<loginResponseType>>(
+      `auth/login`,
+      data
+    );
+  },
+  logout() {
+    return baseInstance.delete<ResponseTodolistsAndTasksType>(`auth/login`);
+  },
+};
 
+// type
 export type APITodolistType = {
   id: string;
   title: string;
@@ -36,7 +80,7 @@ export type CreateTaskResponseDataType = {
 export type TaskResponseType = {
   description: string;
   title: string;
-  completed: boolean,
+  completed: boolean;
   status: number;
   priority: number;
   startDate: string;
@@ -64,68 +108,20 @@ export type GetTasksResponseType = {
   items: TaskResponseType[];
 };
 
-export type loginPropertiesType = { 
-  email: string,
-  password: string,
-  rememberMe: boolean,
-  captcha: boolean
-}
-
-export type loginResponseType = {
-  userId: number,
-  token: string
-}
-
-export type authResponseType = {
-  id: number,
-  email: string,
-  login: string
-}
-
-export const todolistsAndTasksAPI = {
-  getTodolists() {
-    return instance.get<APITodolistType[]>("todo-lists");
-  },
-  createTodolist(title: string) {
-    return instance.post<ResponseTodolistsAndTasksType<ItemDataType>>(
-      "todo-lists",
-      { title: title }
-    );
-  },
-  deleteTodolist(id: string) {
-    return instance.delete<ResponseTodolistsAndTasksType>(`todo-lists/${id}`);
-  },
-  updateTodolist(id: string, title: string) {
-    return instance.put<ResponseTodolistsAndTasksType>(`todo-lists/${id}`, {
-      title: title,
-    });
-  },
-  getTasks(todolistId: string) {
-    return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`);
-  },
-  createTask(todolistId: string, title: string) {
-    return instance.post<ResponseTodolistsAndTasksType<CreateTaskResponseDataType>>(
-      `/todo-lists/${todolistId}/tasks`,
-      { title: title }
-    );
-  },
-  deleteTask(todolistId: string, taskId: string) {
-    return instance.delete<ResponseTodolistsAndTasksType>(
-      `todo-lists/${todolistId}/tasks/${taskId}`
-    );
-  },
-  updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    return instance.put<ResponseTodolistsAndTasksType<CreateTaskResponseDataType>>(
-      `todo-lists/${todolistId}/tasks/${taskId}`, model
-    );
-  },
+export type loginPropertiesType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: boolean;
 };
 
-export const authAPI = {
-  login(data: loginPropertiesType) {
-    return instance.post<ResponseTodolistsAndTasksType<loginResponseType>>(`auth/login`, data)
-  },
-  logout() {
-    return instance.delete<ResponseTodolistsAndTasksType>(`auth/login`)
-  }
-}
+export type loginResponseType = {
+  userId: number;
+  token: string;
+};
+
+export type authResponseType = {
+  id: number;
+  email: string;
+  login: string;
+};
