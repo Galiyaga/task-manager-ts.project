@@ -2,23 +2,29 @@ import {
   AppBar,
   Button,
   IconButton,
-  Menu,
   Toolbar,
   Typography,
-  MenuItem,
 } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu'
+import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { AppRootStateType } from "../../state/store";
+import { MenuWithAuthorization } from "./MenuWithAuthorization";
+import { MenuWithoutAuthorization } from "./MenuWithoutAuthorization";
+import React from "react";
 
-export default function Header() {
+export const Header = React.memo(() => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElMenu(event.currentTarget);
-  };
+  const isLogged = useSelector(
+    (state: AppRootStateType) => state.auth.isLogged
+  );
 
   const handleMenuClose = () => {
     setAnchorElMenu(null);
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElMenu(event.currentTarget);
   };
   return (
     <AppBar position="static">
@@ -31,18 +37,8 @@ export default function Header() {
         >
           <MenuIcon />
         </IconButton>
-        <Menu
-          anchorEl={anchorElMenu}
-          open={Boolean(anchorElMenu)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>Пункт 1</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Пункт 2</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Пункт 3</MenuItem>
-        </Menu>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>News</Typography>
-        <Button color="inherit">Login</Button>
+        {isLogged ? <MenuWithAuthorization anchorElMenu={anchorElMenu} handleMenuClose={handleMenuClose} /> : <MenuWithoutAuthorization anchorElMenu={anchorElMenu} handleMenuClose={handleMenuClose}/>}
       </Toolbar>
     </AppBar>
   );
-}
+})

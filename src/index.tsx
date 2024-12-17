@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { AppRootStateType, store } from "./state/store";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "./components/Login";
-import Layout from "./components/layout/Layout";
+import {Layout} from "./components/layout/Layout";
 import { useSelector } from "react-redux";
 
 export default function AppRoute() {

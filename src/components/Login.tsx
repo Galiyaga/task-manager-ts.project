@@ -13,9 +13,10 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { loginThunk } from "../state/authThunk";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../state/store";
+import { AppDispatch, AppRootStateType } from "../state/store";
 import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -59,7 +60,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export const Login = () => {
+export const Login = React.memo(() => {
   const [emailError, setEmailError] = useState(false);
   const [email, setEmail] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
@@ -212,4 +213,4 @@ export const Login = () => {
       </SignInContainer>
     </>
   );
-}
+})

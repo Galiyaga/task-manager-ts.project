@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
+import {Header} from "./Header";
+import React from "react";
 
-export default function Layout() {
+export const Layout = React.memo(() => {
   return (
     <>
       <Header />
@@ -23,4 +24,4 @@ export default function Layout() {
       </footer>
     </>
   );
-}
+})

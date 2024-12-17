@@ -11,7 +11,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Menu } from "@mui/icons-material";
 import { changeTodolistFilter } from "../state/todolistsSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
