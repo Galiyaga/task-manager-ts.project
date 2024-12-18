@@ -13,10 +13,10 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { loginThunk } from "../state/authThunk";
 import { useDispatch } from "react-redux";
-import { AppDispatch, AppRootStateType } from "../state/store";
+import { AppDispatch } from "../state/store";
 import { useCallback, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AccountType, SelectAccount } from "./SelectAccount";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -60,13 +60,16 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const accounts = [{ email: "galiyaga@yandex.ru", password: "galiya" }];
+
 export const Login = React.memo(() => {
   const [emailError, setEmailError] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -84,12 +87,17 @@ export const Login = React.memo(() => {
   //   });
   // };
 
+  const handleSelectAccount = (account: AccountType | null) => {
+    setOpen(false);
+    if (account) {
+      setEmail(account.email);
+      setPassword(account.password);
+    }
+  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
-    const isValid = validateInputs(); // Проверяем валидность
-    if (!isValid) return; 
-  
-    handleLogin()
+    event.preventDefault();
+
+    handleLogin();
   };
 
   const validateInputs = () => {
@@ -119,20 +127,21 @@ export const Login = React.memo(() => {
     return isValid;
   };
 
-  const handleLogin = useCallback(
-      () => {
-        const isValid = validateInputs()
-        if (isValid) {
-          dispatch(loginThunk({ email: email,
-            password: password,
-            rememberMe: remember,
-            captcha: false }));
-            
-            navigate("/todolists")
-        }
-        },
-      [dispatch, email, password, remember]
-    );
+  const handleLogin = useCallback(() => {
+    const isValid = validateInputs();
+    if (isValid) {
+      dispatch(
+        loginThunk({
+          email: email,
+          password: password,
+          rememberMe: remember,
+          captcha: true,
+        })
+      );
+
+      navigate("/todolists");
+    }
+  }, [dispatch, email, password, remember]);
 
   return (
     <>
@@ -144,10 +153,18 @@ export const Login = React.memo(() => {
             variant="h4"
             align="center"
             textTransform={"uppercase"}
-            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)"}}
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
             autorization
           </Typography>
+          <Button variant="outlined" onClick={() => setOpen(true)}>
+            select an account to view the project
+          </Button>
+          <SelectAccount
+            open={open}
+            accounts={accounts}
+            onClose={handleSelectAccount}
+          />
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -175,7 +192,9 @@ export const Login = React.memo(() => {
                 variant="outlined"
                 color={emailError ? "error" : "primary"}
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
               />
             </FormControl>
             <FormControl>
@@ -194,18 +213,25 @@ export const Login = React.memo(() => {
                 variant="outlined"
                 color={passwordError ? "error" : "primary"}
                 value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
               />
             </FormControl>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemember(e.target.checked)} checked={remember} />}
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setRemember(e.target.checked)
+                  }
+                  checked={remember}
+                />
+              }
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
+            <Button type="submit" fullWidth variant="contained">
               Sign in
             </Button>
           </Box>
@@ -213,4 +239,4 @@ export const Login = React.memo(() => {
       </SignInContainer>
     </>
   );
-})
+});
