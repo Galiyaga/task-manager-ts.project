@@ -28,8 +28,10 @@ type PropsType = {
 
 export const Todolist = React.memo((props: PropsType) => {
   const dispatch = useDispatch<AppDispatch>();
+  // делаем запрос тасков, если LC пустой, чтобы избежать пустого tasksObj
   useEffect(() => {
-    dispatch(getTasks(props.id));
+    const storedTasks = localStorage.getItem("tasks")
+    if (!storedTasks) dispatch(getTasks(props.id));
   }, [dispatch, props.id]); 
   
   const tasksObj = useSelector<AppRootStateType, TaskType[]>(

@@ -5,6 +5,7 @@ import {
   todolistsAndTasksAPI,
   UpdateTaskModelType,
 } from "../api/api";
+import { TasksStateType } from "../components/AppWithRedux";
 
 export const getTasks = createAsyncThunk<
   { tasksArr: TaskType[]; todolistId: string },
@@ -20,6 +21,15 @@ export const getTasks = createAsyncThunk<
       isDone: false,
     }));
 
+    // сохранение в LC
+    const tasksFromLS = localStorage.getItem("tasks");
+    const tasksState: TasksStateType = tasksFromLS
+      ? JSON.parse(tasksFromLS)
+      : {};
+
+    tasksState[todolistId] = formattedTasks;
+    localStorage.setItem("tasks", JSON.stringify(tasksState));
+    // возвращаем для редьюсера
     return { tasksArr: formattedTasks, todolistId };
   } catch (error: any) {
     return rejectWithValue(error.message);

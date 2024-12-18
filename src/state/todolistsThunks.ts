@@ -16,6 +16,9 @@ export const fetchTodolist = createAsyncThunk<
       filter: "all",
     }));
 
+    // сохранение в LC
+    localStorage.setItem("todolists", JSON.stringify(formattedTodolists))
+    // возвращаем для редьюсера
     return formattedTodolists;
   } catch (error: any) {
     return rejectWithValue(error.message);

@@ -7,7 +7,14 @@ import {
   updateTodolist,
 } from "./todolistsThunks";
 
-const initialState: TodolistType[] = [];
+// получаем тудулисты или пустой массив с LC
+const loadTodolistsState = () => {
+  const todolists = localStorage.getItem("todolists");
+
+  return todolists ? JSON.parse(todolists) : [];
+};
+
+const initialState: TodolistType[] = loadTodolistsState();
 
 const todolistsSlice = createSlice({
   name: "todolists",
@@ -19,8 +26,9 @@ const todolistsSlice = createSlice({
     ) {
       const todolist = state.find((tl) => tl.id === action.payload.id);
       if (todolist) todolist.filter = action.payload.filter;
+      saveTodolistsToLocalStorage(state);
     },
-  }, 
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodolist.fulfilled, (state, action) => {
@@ -28,19 +36,26 @@ const todolistsSlice = createSlice({
       })
       .addCase(createTodolist.fulfilled, (state, action) => {
         state.unshift(action.payload);
+        saveTodolistsToLocalStorage(state);
       })
       .addCase(deleteTodolist.fulfilled, (state, action) => {
-        return state.filter((tl) => tl.id !== action.payload);
+        const updateState = state.filter((tl) => tl.id !== action.payload);
+        saveTodolistsToLocalStorage(updateState);
+        return updateState;
       })
       .addCase(updateTodolist.fulfilled, (state, action) => {
         const todolist = state.find((tl) => tl.id === action.payload.id);
         if (todolist) todolist.title = action.payload.title;
+        saveTodolistsToLocalStorage(state);
       });
   },
 });
 
-export const {
-  changeTodolistFilter,
-} = todolistsSlice.actions;
+// обобщенная ф-ия для сохранения в LC
+const saveTodolistsToLocalStorage = (state: TodolistType[]) => {
+  localStorage.setItem("todolists", JSON.stringify(state));
+};
+
+export const { changeTodolistFilter } = todolistsSlice.actions;
 
 export const todolistsReducer = todolistsSlice.reducer;
