@@ -20,7 +20,7 @@ export const loginThunk = createAsyncThunk<
 
     return { userId, token}
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error login");
   }
 });
 
@@ -37,6 +37,6 @@ export const logoutThunk = createAsyncThunk<
       );
     }
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error logout");
   }
 });

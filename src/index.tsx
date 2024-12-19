@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 export default function AppRoute() {
   const isLogged = useSelector(
-    (state: AppRootStateType) => state.auth.isLogged
+    (state: AppRootStateType) => state.auth.auth.isLogged
   );
 
   return (

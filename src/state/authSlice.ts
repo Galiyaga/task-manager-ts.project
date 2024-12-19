@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {} from "./todolistsSlice";
 import { loginThunk, logoutThunk } from "./authThunk";
+import { error } from "console";
+import { TasksStateType } from "../components/AppWithRedux";
 
 const loadAuthState = () => {
   const token = localStorage.getItem("token")
@@ -9,7 +11,18 @@ const loadAuthState = () => {
   return token && userId ? {isLogged: true, userId, token} : {isLogged: false, userId: null, token: null}
 }
 
-const initialState = loadAuthState()
+type AuthStateType = {
+  auth: {isLogged: boolean, token: string | null, userId: string | null};  
+  isLoading: boolean;    
+  error: string | undefined;  
+
+}
+
+const initialState: AuthStateType = {
+  auth: loadAuthState(),
+  isLoading: false,
+  error: undefined as string | undefined
+}
 
 const authSlice = createSlice({
   name: "auth",
@@ -17,18 +30,35 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(loginThunk.pending, (state, action) => {
+      state.isLoading = true
+      state.error = undefined
+    })
     .addCase(loginThunk.fulfilled, (state, action) => {
-      state.isLogged = true;
-      state.userId = action.payload.userId
-      state.token = action.payload.token
+      state.isLoading = false
+      state.auth.isLogged = true;
+      state.auth.userId = action.payload.userId
+      state.auth.token = action.payload.token
+    })
+    .addCase(loginThunk.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    })
+    .addCase(logoutThunk.pending, (state, action) => {
+      state.isLoading = true
+      state.error = undefined
     })
     .addCase(logoutThunk.fulfilled, (state, action) => {
-      state.isLogged = false;
-      state.userId = null
-      state.token = null
+      state.isLoading = false
+      state.auth.isLogged = false;
+      state.auth.userId = null
+      state.auth.token = null
 
-      localStorage.removeItem("token")
-      localStorage.removeItem("userId")
+      localStorage.clear()
+    })
+    .addCase(logoutThunk.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
     });
   },
 });

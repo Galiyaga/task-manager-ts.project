@@ -13,10 +13,12 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { loginThunk } from "../../state/authThunk";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../state/store";
+import { AppDispatch, AppRootStateType } from "../../state/store";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AccountType, SelectAccount } from "./SelectAccount";
+import { useSelector } from "react-redux";
+import { Alert } from "@mui/material";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -40,9 +42,9 @@ const Card = styled(MuiCard)(({ theme }) => ({
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
   minHeight: "100%",
-  padding: theme.spacing(2),
+  padding: "0",
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(4),
+    padding: "0",
   },
   "&::before": {
     content: '""',
@@ -73,19 +75,10 @@ export const Login = React.memo(() => {
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
-  //TODO: подумать над тем, чтоб использовать формдату
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   if (emailError || passwordError) {
-  //     event.preventDefault();
-  //     return;
-  //   }
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
+  const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  const { isLoading, error } = useSelector(
+    (state: AppRootStateType) => state.auth
+  );
 
   const handleSelectAccount = (account: AccountType | null) => {
     setOpen(false);
@@ -94,6 +87,7 @@ export const Login = React.memo(() => {
       setPassword(account.password);
     }
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -142,6 +136,10 @@ export const Login = React.memo(() => {
       navigate("/todolists");
     }
   }, [dispatch, email, password, remember]);
+
+  // const handleCloseErrorDialog = () => {
+  //   setOpenErrorDialog(false);
+  // };
 
   return (
     <>
@@ -237,6 +235,9 @@ export const Login = React.memo(() => {
           </Box>
         </Card>
       </SignInContainer>
+      {error ? <Alert variant="filled" severity="error">
+        {error}
+      </Alert> : ''}
     </>
   );
 });

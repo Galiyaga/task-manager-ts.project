@@ -5,7 +5,7 @@ import { baseInstance } from "./baseInstance";
 
 
 export const useApi = () => {
-    const token = useSelector((state: AppRootStateType) => state.auth.token)
+    const token = useSelector((state: AppRootStateType) => state.auth.auth.token)
 
     const instanceWithToken = axios.create({
         ...baseInstance.defaults,

@@ -1,6 +1,6 @@
 import { loginThunk } from "./authThunk";
 import { fetchTodolist } from "./todolistsThunks";
-import { createListenerMiddleware, ThunkDispatch } from "@reduxjs/toolkit";
+import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 export const successLoginMiddleware = createListenerMiddleware();
 

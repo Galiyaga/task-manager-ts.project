@@ -16,7 +16,7 @@ import React from "react";
 export const Header = React.memo(() => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
   const isLogged = useSelector(
-    (state: AppRootStateType) => state.auth.isLogged
+    (state: AppRootStateType) => state.auth.auth.isLogged
   );
 
   const handleMenuClose = () => {
