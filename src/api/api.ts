@@ -81,7 +81,7 @@ export type TaskResponseType = {
   description: string;
   title: string;
   completed: boolean;
-  status: number;
+  status: Statuses;
   priority: number;
   startDate: string;
   deadline: string;
@@ -91,12 +91,17 @@ export type TaskResponseType = {
   addedDate: string;
 };
 
+export enum Statuses {
+  New,
+  Completed,
+}
+
 export type PartialUpdateTaskModelType = Partial<UpdateTaskModelType>;
 
 export type UpdateTaskModelType = {
   title: string;
   description: string;
-  status: number;
+  status: Statuses;
   priority: number;
   startDate: string;
   deadline: string;

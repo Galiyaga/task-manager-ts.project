@@ -1,14 +1,17 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TaskType } from "./Todolist";
 import { ChangeEvent, useCallback } from "react";
 import { Delete } from "@mui/icons-material";
 import { Checkbox, IconButton } from "@mui/material";
 import { EditableSpan } from "./EditableSpan";
 import React from "react";
-import { deleteTask, updateTasksTitle } from "../state/tasksThunk";
-import { AppDispatch } from "../state/store";
-import { updateTasksStatus } from "../state/tasksSlice";
-import { UpdateTaskModelType } from "../api/api";
+import {
+  deleteTask,
+  updateTasksStatus,
+  updateTasksTitle,
+} from "../state/tasksThunk";
+import { AppDispatch, AppRootStateType } from "../state/store";
+import { Statuses, UpdateTaskModelType } from "../api/api";
 
 export type TaskPropsType = {
   todolistId: string;
@@ -17,19 +20,31 @@ export type TaskPropsType = {
 
 export const Task = React.memo((props: TaskPropsType) => {
   const dispatch = useDispatch<AppDispatch>();
+  const tasks = useSelector(
+    (state: AppRootStateType) => state.tasks
+  );
+
   const onClickHandler = () =>
     dispatch(
       deleteTask({ todolistId: props.todolistId, taskId: props.task.id })
     );
-  const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      updateTasksStatus({
-        taskId: props.task.id,
-        todolistId: props.todolistId,
-        isDone: e.currentTarget.checked,
-      })
-    );
-  };
+
+  const onChangeStatusHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      let newIsDoneValue = e.currentTarget.checked 
+      const title = props.task.title
+      const status: Statuses = newIsDoneValue ? 1 : 0;
+      console.log("status", status);
+      dispatch(
+        updateTasksStatus({
+          taskId: props.task.id,
+          todolistId: props.todolistId,
+          model: { status, title } as UpdateTaskModelType,
+        })
+      );
+    },
+    [props.task.id, props.todolistId]
+  );
   const onChangeTitleHandler = useCallback(
     (newTitle: string) => {
       dispatch(
@@ -44,8 +59,8 @@ export const Task = React.memo((props: TaskPropsType) => {
   );
 
   return (
-    <div key={props.task.id} className={props.task.isDone ? "is-done" : ""}>
-      <Checkbox checked={props.task.isDone} onChange={onChangeStatusHandler} />
+    <div className={props.task.isDone ? "is-done" : ""}>
+      <Checkbox checked={props.task.isDone } onChange={onChangeStatusHandler} />
       <EditableSpan title={props.task.title} onChange={onChangeTitleHandler} />
       <IconButton onClick={onClickHandler}>
         <Delete />

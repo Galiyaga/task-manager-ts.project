@@ -1,10 +1,11 @@
 // import { TasksStateType } from "../App";
 import { TasksStateType } from "../../components/AppWithRedux";
-import { tasksReducer, updateTasksStatus } from "../tasksSlice";
+import { tasksReducer } from "../tasksSlice";
 import {
   createTask,
   deleteTask,
   getTasks,
+  updateTasksStatus,
   updateTasksTitle,
 } from "../tasksThunk";
 import {} from "../todolistsSlice";
@@ -109,11 +110,17 @@ describe("tasks reducer", () => {
   });
 
   it("status of specified task should be change", () => {
-    const action = updateTasksStatus({
-      todolistId: "todolistId2",
-      taskId: "2",
-      isDone: false,
-    });
+    const action = {
+      type: updateTasksStatus.fulfilled.type,
+      payload: {
+        todolistId: "todolistId2",
+        taskId: "2",
+        model: {
+          status: true,
+          title: 'Task Title'
+        },
+      },
+    };
 
     const endState = tasksReducer(startState, action);
 

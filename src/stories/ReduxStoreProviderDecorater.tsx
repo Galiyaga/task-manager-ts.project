@@ -10,9 +10,7 @@ import { errorReducer } from "../state/errorSlice";
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
-  tasks: tasksReducer,
-  auth: authReducer,
-  error: errorReducer,
+  tasks: tasksReducer
 });
 
 type globalStateType = {

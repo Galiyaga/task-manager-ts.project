@@ -12,6 +12,7 @@ import {
   createTask,
   deleteTask,
   getTasks,
+  updateTasksStatus,
   updateTasksTitle,
 } from "../tasksThunk";
 
@@ -245,15 +246,6 @@ describe("deleteTask thunk", () => {
 });
 
 describe("updateTasksTitle thunk", () => {
-  const mockUpdateTaskModel: UpdateTaskModelType = {
-    title: updateTaskTitle,
-    description: "",
-    status: 0,
-    priority: 1,
-    startDate: "",
-    deadline: "",
-  };
-
   const mockArgs = {
     todolistId: todolistId,
     taskId: taskId,
@@ -342,5 +334,103 @@ describe("updateTasksTitle thunk", () => {
       updateTasksTitle.pending(expect.anything(), mockArgs)
     );
     expect(result.payload).toEqual("Failed to update task`s title");
+  });
+});
+
+describe("updateTasksStatus thunk", () => {
+  const mockArgs = {
+    todolistId: todolistId,
+    taskId: taskId,
+    model: { status: 1, title: taskTitle } as UpdateTaskModelType,
+  };
+
+  it("dispatches fulfiiled action with update task`s status on seccess", async () => {
+    const mockTaskResponse: ResponseTodolistsAndTasksType<CreateTaskResponseDataType> =
+      {
+        resultCode: 0,
+        messages: [],
+        data: {
+          item: {
+            description: "Test Task",
+            title: taskTitle,
+            completed: false,
+            status: 1,
+            priority: 1,
+            startDate: "",
+            deadline: "",
+            id: taskId,
+            todoListId: todolistId,
+            order: 0,
+            addedDate: "",
+          },
+        },
+      };
+
+    const mockResponse: AxiosResponse<typeof mockTaskResponse> = {
+      data: mockTaskResponse,
+      status: 200,
+      statusText: "OK",
+      headers: new AxiosHeaders(),
+      config: mockConfig,
+    };
+
+    mockedtodolistsAndTasksAPI.updateTask.mockResolvedValue(mockResponse);
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await updateTasksStatus(mockArgs)(
+      dispatch,
+      getState,
+      undefined
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTasksStatus.pending(expect.anything(), mockArgs)
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTasksStatus.fulfilled(
+        {
+          todolistId: "test-totdolist-id",
+          taskId: "task-1",
+          model: {
+            status: true,
+            title: "Task 1 Title"
+          }
+        },
+        expect.anything(),
+        mockArgs
+      )
+    );
+
+    expect(result.payload).toEqual({
+      todolistId: "test-totdolist-id",
+      taskId: "task-1",
+      model: {
+        status: true,
+        title: "Task 1 Title"
+      }
+    });
+  });
+
+  it("dispatches rejected action with error message on failure in the updateTasksStatus", async () => {
+    mockedtodolistsAndTasksAPI.updateTask.mockRejectedValue(
+      new Error("Failed to update task`s status")
+    );
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    const result = await updateTasksStatus(mockArgs)(
+      dispatch,
+      getState,
+      undefined
+    );
+
+    expect(dispatch).toHaveBeenCalledWith(
+      updateTasksStatus.pending(expect.anything(), mockArgs)
+    );
+    expect(result.payload).toEqual("Failed to update task`s status");
   });
 });

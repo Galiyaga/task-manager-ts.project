@@ -66,7 +66,7 @@ export const GetTasks = () => {
   const [state, setState] = useState<any>({ name: "Galiya" });
 
   useEffect(() => {
-    const todolistId = "1dc4ea9a-1b04-4961-a17e-d1a2ff62fc90";
+    const todolistId = "30991547-22ff-4d8b-b918-9a83c56d6945";
     todolistsAndTasksAPI.getTasks(todolistId).then((res) => {
       setState(res.data.items);
     });

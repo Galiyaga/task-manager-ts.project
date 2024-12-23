@@ -5,6 +5,7 @@ import {
   createTask,
   deleteTask,
   getTasks,
+  updateTasksStatus,
   updateTasksTitle,
 } from "./tasksThunk";
 import { createTodolist, deleteTodolist } from "./todolistsThunks";
@@ -21,22 +22,7 @@ const initialState: TasksStateType = loadTasksState();
 const tasksSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {
-    updateTasksStatus(
-      state,
-      action: PayloadAction<{
-        todolistId: string;
-        taskId: string;
-        isDone: boolean;
-      }>
-    ) {
-      const task = state[action.payload.todolistId].find(
-        (t) => t.id === action.payload.taskId
-      );
-      if (task) task.isDone = action.payload.isDone;
-      saveTasksToLocalStorage(state);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getTasks.fulfilled, (state, action) => {
@@ -59,6 +45,13 @@ const tasksSlice = createSlice({
         if (task) task.title = action.payload.title;
         saveTasksToLocalStorage(state);
       })
+      .addCase(updateTasksStatus.fulfilled, (state, action) => {
+        const task = state[action.payload.todolistId].find(
+          (t) => t.id === action.payload.taskId
+        );
+        if (task) task.isDone = action.payload.model.status;
+        saveTasksToLocalStorage(state);
+      })
       .addCase(createTodolist.fulfilled, (state, action) => {
         state[action.payload.id] = [];
         saveTasksToLocalStorage(state);
@@ -74,7 +67,5 @@ const tasksSlice = createSlice({
 const saveTasksToLocalStorage = (state: TasksStateType) => {
   localStorage.setItem("tasks", JSON.stringify(state));
 };
-
-export const { updateTasksStatus } = tasksSlice.actions;
 
 export const tasksReducer = tasksSlice.reducer;

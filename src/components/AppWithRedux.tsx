@@ -1,15 +1,10 @@
 import { TaskType, Todolist } from "./Todolist";
 import { AddItemForm } from "../components/AddItemFrom";
 import {
-  AppBar,
-  Button,
   Container,
   Grid,
   Grid2,
-  IconButton,
   Paper,
-  Toolbar,
-  Typography,
 } from "@mui/material";
 import { changeTodolistFilter } from "../state/todolistsSlice";
 import { useDispatch } from "react-redux";
