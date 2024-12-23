@@ -5,19 +5,25 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { setError } from '../state/errorSlice';
+import { AppDispatch, AppRootStateType } from '../state/store';
 
-type ErrorDialogPropsType = {
-    message: string | undefined; 
-    open: boolean,
-    onClose: () => void 
-}
+export const GlobalErrorDialog = () => {
+  const dispatch = useDispatch<AppDispatch>();
 
-export const ErrorDialog = (props: ErrorDialogPropsType) => {
+  const errorMessage = useSelector(
+      (state: AppRootStateType) => state.error.message
+    );
+  
+    const handleClose = () => {
+      dispatch(setError(''))
+    };
   return (
     <>
       <Dialog
-        open={props.open}
-        onClose={props.onClose}
+        open={!!errorMessage}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -26,11 +32,11 @@ export const ErrorDialog = (props: ErrorDialogPropsType) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {props.message}
+            {errorMessage}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} autoFocus>
+          <Button onClick={handleClose} autoFocus>
           try again
           </Button>
         </DialogActions>

@@ -1,7 +1,6 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import { TaskType } from "../components/Todolist";
 import {
-  PartialUpdateTaskModelType,
   todolistsAndTasksAPI,
   UpdateTaskModelType,
 } from "../api/api";

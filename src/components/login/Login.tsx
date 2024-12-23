@@ -18,9 +18,6 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AccountType, SelectAccount } from "./SelectAccount";
 import { useSelector } from "react-redux";
-import { Alert } from "@mui/material";
-import { ErrorDialog } from "../ErrorDialog";
-import { setError } from "../../state/errorSlice";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -77,17 +74,9 @@ export const Login = React.memo(() => {
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const isLoading = useSelector(
     (state: AppRootStateType) => state.auth
   );
-  const error = useSelector(
-    (state: AppRootStateType) => state.error.message
-  );
-
-  const handleClose = () => {
-    dispatch(setError(''))
-  };
 
   const handleSelectAccount = (account: AccountType | null) => {
     setOpen(false);
@@ -245,7 +234,6 @@ export const Login = React.memo(() => {
           </Box>
         </Card>
       </SignInContainer>
-      <ErrorDialog message={error} open={Boolean(error)} onClose={handleClose} /> 
     </>
   );
 });
