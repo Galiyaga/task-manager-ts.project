@@ -5,7 +5,7 @@ import { TodolistType } from "../components/AppWithRedux";
 export const fetchTodolist = createAsyncThunk<
   TodolistType[],
   void,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("todolists/fetchTodolists", async (_, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.getTodolists();
@@ -17,18 +17,18 @@ export const fetchTodolist = createAsyncThunk<
     }));
 
     // сохранение в LC
-    localStorage.setItem("todolists", JSON.stringify(formattedTodolists))
+    localStorage.setItem("todolists", JSON.stringify(formattedTodolists));
     // возвращаем для редьюсера
     return formattedTodolists;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error get todolists");
   }
 });
 
 export const createTodolist = createAsyncThunk<
   TodolistType,
   string,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("todolists/createTodolist", async (title, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.createTodolist(title);
@@ -40,27 +40,27 @@ export const createTodolist = createAsyncThunk<
     };
     return formattedTodolist;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message  || "Unknown error create todolists");
   }
 });
 
 export const deleteTodolist = createAsyncThunk<
   string,
   string,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("todolists/deleteTodolist", async (id, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.deleteTodolist(id);
     return id;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message  || "Unknown error delete todolists");
   }
 });
 
 export const updateTodolist = createAsyncThunk<
   { id: string; title: string },
   { id: string; title: string },
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("todolists/updateTodolists", async ({ id, title }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.updateTodolist(id, title);
@@ -69,6 +69,6 @@ export const updateTodolist = createAsyncThunk<
     }
     return { id, title };
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message  || "Unknown error update todolists");
   }
 });

@@ -10,7 +10,7 @@ import { TasksStateType } from "../components/AppWithRedux";
 export const getTasks = createAsyncThunk<
   { tasksArr: TaskType[]; todolistId: string },
   string,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("tasks/getTasks", async (todolistId, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.getTasks(todolistId);
@@ -32,13 +32,13 @@ export const getTasks = createAsyncThunk<
     // возвращаем для редьюсера
     return { tasksArr: formattedTasks, todolistId };
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error get tasks");
   }
 });
 export const createTask = createAsyncThunk<
   { task: TaskType; todolistId: string },
   { todolistId: string; title: string },
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("tasks/createTask", async ({ todolistId, title }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.createTask(todolistId, title);
@@ -51,28 +51,28 @@ export const createTask = createAsyncThunk<
 
     return { task: formattedTask, todolistId };
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error create tasks");
   }
 });
 
 export const deleteTask = createAsyncThunk<
   { todolistId: string; taskId: string },
   { todolistId: string; taskId: string },
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("tasks/deleteTask", async ({ todolistId, taskId }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.deleteTask(todolistId, taskId);
 
     return { todolistId, taskId };
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.message || "Unknown error delete tasks");
   }
 });
 
 export const updateTasksTitle = createAsyncThunk<
   { todolistId: string; taskId: string; title: string },
   { todolistId: string; taskId: string; model: UpdateTaskModelType },
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >(
   "tasks/updateTasksTitle",
   async ({ todolistId, taskId, model }, { rejectWithValue }) => {
@@ -89,11 +89,11 @@ export const updateTasksTitle = createAsyncThunk<
 
       const title = model.title;
       if (res.data.resultCode !== 0) {
-        return rejectWithValue("Failed to update task`s title");
+        return rejectWithValue(`Failed to update tasks title, resultCode: ${res.data.resultCode }`);
       }
       return { todolistId, taskId, title };
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message || "Unknown error update tasks");
     }
   }
 );

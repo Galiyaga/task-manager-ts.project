@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { AccountType, SelectAccount } from "./SelectAccount";
 import { useSelector } from "react-redux";
 import { Alert } from "@mui/material";
+import { ErrorDialog } from "../ErrorDialog";
+import { setError } from "../../state/errorSlice";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -76,9 +78,16 @@ export const Login = React.memo(() => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
-  const { isLoading, error } = useSelector(
+  const isLoading = useSelector(
     (state: AppRootStateType) => state.auth
   );
+  const error = useSelector(
+    (state: AppRootStateType) => state.error.message
+  );
+
+  const handleClose = () => {
+    dispatch(setError(''))
+  };
 
   const handleSelectAccount = (account: AccountType | null) => {
     setOpen(false);
@@ -132,11 +141,12 @@ export const Login = React.memo(() => {
           captcha: true,
         })
       );
-
+      
       navigate("/todolists");
     }
   }, [dispatch, email, password, remember]);
 
+  
   // const handleCloseErrorDialog = () => {
   //   setOpenErrorDialog(false);
   // };
@@ -235,9 +245,7 @@ export const Login = React.memo(() => {
           </Box>
         </Card>
       </SignInContainer>
-      {error ? <Alert variant="filled" severity="error">
-        {error}
-      </Alert> : ''}
+      <ErrorDialog message={error} open={Boolean(error)} onClose={handleClose} /> 
     </>
   );
 });

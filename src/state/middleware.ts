@@ -1,8 +1,10 @@
 import { loginThunk } from "./authThunk";
+import { setError } from "./errorSlice";
 import { fetchTodolist } from "./todolistsThunks";
-import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { createListenerMiddleware, isRejected } from "@reduxjs/toolkit";
 
 export const successLoginMiddleware = createListenerMiddleware();
+export const errorMiddleware = createListenerMiddleware();
 
 successLoginMiddleware.startListening({
   actionCreator: loginThunk.fulfilled,
@@ -14,3 +16,13 @@ successLoginMiddleware.startListening({
     }
   },
 });
+
+errorMiddleware.startListening({
+  matcher: isRejected,
+  effect: async (action, listenerApi) => {
+    const errorMesssage: string | undefined = 
+    action.payload as string | undefined ||  "An unknown error occurred"
+
+    listenerApi.dispatch(setError(errorMesssage))
+  }
+})

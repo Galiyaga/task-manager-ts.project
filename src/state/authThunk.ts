@@ -2,23 +2,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authAPI, loginPropertiesType } from "../api/api";
 
 export const loginThunk = createAsyncThunk<
-  {userId: string, token: string},
+  { userId: string; token: string },
   loginPropertiesType,
-  { rejectValue: string }
+  { rejectValue: string | undefined }
 >("auth/loginThunk", async (data, { rejectWithValue }) => {
   try {
     const res = await authAPI.login(data);
     if (res.data.resultCode !== 0) {
       return rejectWithValue(
-        `Error login: resultCode returned with value ${res.data.resultCode}`
+        `Error login: ${res.data.messages}`
       );
     }
-    const userId = res.data.data.userId.toString()
-    const token = res.data.data.token
-    localStorage.setItem("userId", userId.toString())
-    localStorage.setItem("token", token)
+    const userId = res.data.data.userId.toString();
+    const token = res.data.data.token;
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("token", token);
 
-    return { userId, token}
+    return { userId, token };
   } catch (error: any) {
     return rejectWithValue(error.message || "Unknown error login");
   }
@@ -27,8 +27,8 @@ export const loginThunk = createAsyncThunk<
 export const logoutThunk = createAsyncThunk<
   void,
   void,
-  { rejectValue: string }
->("auth/logoutThunk", async (_,{ rejectWithValue }) => {
+  { rejectValue: string | undefined }
+>("auth/logoutThunk", async (_, { rejectWithValue }) => {
   try {
     const res = await authAPI.logout();
     if (res.data.resultCode !== 0) {
