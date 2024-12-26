@@ -135,11 +135,6 @@ export const Login = React.memo(() => {
     }
   }, [dispatch, email, password, remember]);
 
-  
-  // const handleCloseErrorDialog = () => {
-  //   setOpenErrorDialog(false);
-  // };
-
   return (
     <>
       <CssBaseline enableColorScheme />
