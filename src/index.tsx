@@ -9,6 +9,7 @@ import { Login } from "./components/login/Login";
 import { Layout } from "./components/layout/Layout";
 import { useSelector } from "react-redux";
 import { GlobalErrorDialog } from "./components/ErrorDialog";
+import { Loading } from "./components/Loading";
 
 export default function AppRoute() {
   const isLogged = useSelector(
@@ -42,6 +43,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
+    <Loading />
     <BrowserRouter>
       <GlobalErrorDialog />
       <AppRoute />
