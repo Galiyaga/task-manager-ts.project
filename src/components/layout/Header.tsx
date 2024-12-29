@@ -26,13 +26,10 @@ export const Header = React.memo(() => {
     [dispatch]
   );
 
-  const handleLogin = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      navigate("/login")
-    },
-    []
-  );
+  const handleLogin = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    navigate("/login");
+  }, []);
 
   const handleMenuClose = () => {
     setAnchorElMenu(null);
@@ -62,13 +59,15 @@ export const Header = React.memo(() => {
           open={Boolean(anchorElMenu)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={() => handleSectionClick('/about')}>About the project</MenuItem>
-          {isLogged ? (
-            <MenuItem onClick={() => handleSectionClick('/user-details')}>User details</MenuItem>
-          ) : (
-            <MenuItem onClick={() => handleSectionClick('/login/instructions')}>Login instructions</MenuItem>
+          <MenuItem onClick={() => handleSectionClick("/about")}>
+            About the project
+          </MenuItem>
+          {!isLogged && (
+            <MenuItem onClick={() => handleSectionClick("/login/instructions")}>
+              Login instructions
+            </MenuItem>
           )}
-          <MenuItem onClick={() => handleSectionClick('/help')}>Help</MenuItem>
+          <MenuItem onClick={() => handleSectionClick("/help")}>Help</MenuItem>
         </Menu>
         <Typography
           variant="h6"
@@ -83,10 +82,7 @@ export const Header = React.memo(() => {
           </Button>
         ) : (
           <Link href="/login" color="inherit">
-            <Button
-              color="inherit"
-              onClick={handleLogin}
-            >
+            <Button color="inherit" onClick={handleLogin}>
               Login
             </Button>
           </Link>

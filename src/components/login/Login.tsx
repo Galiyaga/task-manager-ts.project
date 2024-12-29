@@ -39,8 +39,9 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
+  height: "100dvh",
   minHeight: "100%",
+  overflow: "hidden",
   padding: "0",
   [theme.breakpoints.up("sm")]: {
     padding: "0",
@@ -51,6 +52,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     position: "absolute",
     zIndex: -1,
     inset: 0,
+    width: "100%",
+    height: "100%",
     backgroundImage:
       "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
     backgroundRepeat: "no-repeat",
@@ -58,6 +61,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
       backgroundImage:
         "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
     }),
+    overflow: "hidden",
   },
 }));
 
@@ -74,9 +78,7 @@ export const Login = React.memo(() => {
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const isLoading = useSelector(
-    (state: AppRootStateType) => state.auth
-  );
+  const isLoading = useSelector((state: AppRootStateType) => state.auth);
 
   const handleSelectAccount = (account: AccountType | null) => {
     setOpen(false);
@@ -130,7 +132,7 @@ export const Login = React.memo(() => {
           captcha: true,
         })
       );
-      
+
       navigate("/todolists");
     }
   }, [dispatch, email, password, remember]);
