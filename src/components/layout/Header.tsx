@@ -5,15 +5,10 @@ import { useSelector } from "react-redux";
 import { AppRootStateType } from "../../state/store";
 import { Button, Menu, MenuItem, Typography } from "@mui/material";
 import React, { useCallback } from "react";
-import { loginThunk, logoutThunk } from "../../state/authThunk";
+import { logoutThunk } from "../../state/authThunk";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
 import { useNavigate } from "react-router-dom";
-import { About } from "../menu/About";
-import { UserDetails } from "../menu/UserDetails";
-import { LoginInstructions } from "../menu/LoginInstructions";
-import { Help } from "@mui/icons-material";
-
 export const Header = React.memo(() => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
   const isLogged = useSelector(
