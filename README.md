@@ -1,46 +1,105 @@
-# Getting Started with Create React App
+# Фронтенд-разработка проекта таск-менеджер
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Описание
 
-## Available Scripts
+> Данный веб-сайт разработан с помощью create-react-app и TypeScript и осуществляет возможность добавления, удаления, фильтрации и редактирования задач, используя современные инструменты для разработки.
 
-In the project directory, you can run:
+## Клиентская часть сервиса состоит из:
 
-### `yarn start`
+- формы авторизации
+- страницы с выводом задач
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Основной функционал
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Зарегистрированный пользователь может хранить и изменять задачи и подзадачи, отмечать их выполненными, а также фильтровать.
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Также в проекте реализовано:**
 
-### `yarn build`
+1. Работа с авторизацией с помощью токенов для безопасной авторизации
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Сделаны обязательные поля и маскировка личной информации, валидация данных
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Написан lazy loading при ожидании ответа с сервера, делая пользовательский опыт комфортным.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Технологии:
 
-### `yarn eject`
+<img src="https://img.shields.io/badge/-REACT-000000?logo=React&logoColor=#00fff" alt="REACT"/>&nbsp;
+<img src="https://img.shields.io/badge/TypeScript-blue?logo=TypeScript&logoColor=blue&color=white" alt="TYPESCRIPT"/>&nbsp;
+<img src="https://img.shields.io/badge/-REDUX-8a2eb2?logo=Redux&logoColor=#00fff" alt="REDUX"/>&nbsp;
+<img src="https://img.shields.io/badge/HTML5-red?logo=html5&logoColor=white" alt="HTML5"/>&nbsp;
+<img src="https://img.shields.io/badge/CSS3-blue?logo=css3&logoColor=white" alt="CSS3"/>&nbsp;
+<img src="https://img.shields.io/badge/Node.js-green?logo=Node.js&logoColor=green&color=black
+" alt="Node.js"/>&nbsp;
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## В проекте реализованы технические требования:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Клиентская часть написана с помощью React
+- Использован компонентный подход
+- Использованы библиотеки ReactRouter, Redux и Redux Toolkit
+- Для запросов к API используются методы createAsyncThunk
+- Приложение корректно отображается на различных разрешениях
+- Отзывчивая и адаптивная верстка (десктоп, планшет и мобильные телефоны)
+- На интерактивных элементах (ссылках, кнопках), при наведении курсора появляется cursor: pointer
+- Использование осмысленных имен для всех переменных, классов и функций
+- Соблюдение правил написания кода – кодстайла
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Начало работы с React-приложением
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Этот проект создан с использованием [Create React App](https://github.com/facebook/create-react-app).
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Для запуска проекта (на своем устройстве) выполнить действия в терминале:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Клонировать репозиторий на свой ПК:
+
+```bash
+git clone https://github.com/Galiyaga/task-manager-ts.project.git
+```
+
+2. Поставить пакеты в корне проекта:
+
+```bash
+yarn add
+```
+
+3. Для запуска приложения в режиме development выполнить:
+
+```bash
+yarn start
+```
+
+4. Для запуска приложения в режиме production необходимо собрать проект:
+
+```bash
+yarn build
+```
+
+5. После сборки выполнить:
+
+```bash
+yarn preview
+```
+
+**Ссылка для просмотра проекта:** ***https://finally-project-three.vercel.app***
+
+#### Доступные команды
+
+- `yarn start`: запускает приложение в режиме разработки.
+- `yarn test`: запускает тесты.
+- `yarn build`: собирает приложение для производственной среды.
+- `yarn preview`: запускает локальный сервер для предпросмотра собранного проекта.
+- `yarn lint`: запускает статический анализатор кода.
+
+#### Дополнительные ресурсы
+
+- [Документация Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
+- [Документация React](https://reactjs.org/)
+- [Документация TypeScript](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html)
+
+#### Данные для входа
+
+- **Логин:** `galiyaga@yandex.ru`
+- **Пароль:** `galiya`
