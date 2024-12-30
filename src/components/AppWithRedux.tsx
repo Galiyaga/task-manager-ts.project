@@ -11,7 +11,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, AppRootStateType } from "../state/store";
 import { useCallback } from "react";
-import { v1 } from "uuid";
 import {
   createTodolist,
   deleteTodolist,
@@ -51,7 +50,7 @@ function AppWithRedux() {
   );
 
   const handleAddTodolist = useCallback(
-    (title: string, id: string = v1()) => {
+    (title: string) => {
       dispatch(createTodolist(title));
     },
     [dispatch]
@@ -66,7 +65,6 @@ function AppWithRedux() {
 
   return (
     <div className="App">
-      
       <Container fixed>
         <Grid container style={{ padding: "20px" }}>
           <AddItemForm addItem={handleAddTodolist} />

@@ -95,9 +95,7 @@ describe("logout thunk", () => {
     mockedAuthAPI.logout.mockResolvedValue(mockResponse);
 
     const dispatch = jest.fn();
-    const getState = jest.fn();
 
-    const result = await logoutThunk()(dispatch, getState, undefined);
     expect(dispatch).toHaveBeenCalledWith(
       logoutThunk.pending(expect.anything(), undefined)
     );

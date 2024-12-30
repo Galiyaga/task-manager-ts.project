@@ -62,7 +62,7 @@ git clone https://github.com/Galiyaga/task-manager-ts.project.git
 2. Поставить пакеты в корне проекта:
 
 ```bash
-yarn add
+yarn install
 ```
 
 3. Для запуска приложения в режиме development выполнить:

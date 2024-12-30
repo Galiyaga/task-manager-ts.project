@@ -1,14 +1,13 @@
 import { ControlPoint } from "@mui/icons-material";
 import { IconButton, TextField } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type ItemFormPropsType = {
-    addItem: (title: string) => void;
+  addItem: (title: string) => void;
 };
 
-export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
-
+export const AddItemForm = React.memo((props: ItemFormPropsType) => {
   const [newItemTitle, setNewItemTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -16,14 +15,14 @@ export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
     setNewItemTitle(e.target.value);
   };
 
-  const handleAddItem = () => {
+  const handleAddItem = useCallback(() => {
     if (newItemTitle.trim().length) {
       props.addItem(newItemTitle.trim());
       setNewItemTitle("");
     } else {
-      setError("Заполните поле")
+      setError("Заполните поле");
     }
-  };
+  }, [props.addItem, newItemTitle]);
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (error !== null) setError(null);
@@ -32,20 +31,20 @@ export const AddItemForm = React.memo ( (props: ItemFormPropsType) => {
 
   return (
     <div>
-    <TextField 
-          type="text"
-          required
-          value={newItemTitle}
-          onChange={onChangeHandler}
-          onKeyPress={onKeyPressHandler}
-          variant="outlined"
-          label="Название"
-          error={!!error}
-          helperText={error}
-        />
-        <IconButton onClick={handleAddItem} color="primary">
-          <ControlPoint />
-        </IconButton>
+      <TextField
+        type="text"
+        required
+        value={newItemTitle}
+        onChange={onChangeHandler}
+        onKeyPress={onKeyPressHandler}
+        variant="outlined"
+        label="Название"
+        error={!!error}
+        helperText={error}
+      />
+      <IconButton onClick={handleAddItem} color="primary">
+        <ControlPoint />
+      </IconButton>
     </div>
-  )
-})
+  );
+});

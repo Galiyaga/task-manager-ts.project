@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {} from "./todolistsSlice";
 import { loginThunk, logoutThunk } from "./authThunk";
-import { error } from "console";
-import { TasksStateType } from "../components/AppWithRedux";
-
 const loadAuthState = () => {
   const token = localStorage.getItem("token")
   const userId = localStorage.getItem("userId")
@@ -14,14 +11,11 @@ const loadAuthState = () => {
 type AuthStateType = {
   auth: {isLogged: boolean, token: string | null, userId: string | null};  
   isLoading: boolean;    
-  // error: string | undefined;  
-
 }
 
 const initialState: AuthStateType = {
   auth: loadAuthState(),
   isLoading: false,
-  // error: undefined as string | undefined
 }
 
 const authSlice = createSlice({
@@ -32,7 +26,6 @@ const authSlice = createSlice({
     builder
     .addCase(loginThunk.pending, (state, action) => {
       state.isLoading = true
-      // state.error = undefined
     })
     .addCase(loginThunk.fulfilled, (state, action) => {
       state.isLoading = false
@@ -42,11 +35,9 @@ const authSlice = createSlice({
     })
     .addCase(loginThunk.rejected, (state, action) => {
       state.isLoading = false
-      // state.error = action.payload
     })
     .addCase(logoutThunk.pending, (state, action) => {
       state.isLoading = true
-      // state.error = undefined
     })
     .addCase(logoutThunk.fulfilled, (state, action) => {
       state.isLoading = false
@@ -58,7 +49,6 @@ const authSlice = createSlice({
     })
     .addCase(logoutThunk.rejected, (state, action) => {
       state.isLoading = false
-      // state.error = action.payload
     });
   },
 });

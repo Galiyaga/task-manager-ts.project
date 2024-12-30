@@ -7,7 +7,6 @@ import {
 } from "../../api/api";
 import { mockConfig } from "../tests/todolistsThunks.test";
 import { GetTasksResponseType } from "../../api/api";
-import { TaskType } from "../../components/Todolist";
 import {
   createTask,
   deleteTask,

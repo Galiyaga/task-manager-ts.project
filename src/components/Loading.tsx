@@ -1,11 +1,9 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, AppRootStateType } from "../state/store";
-import { setLoading } from "../state/loadingSlice";
+import { useSelector } from "react-redux";
+import { AppRootStateType } from "../state/store";
 
 export const Loading = () => {
-  const dispatch = useDispatch<AppDispatch>();
 
   const isLoadiing = useSelector(
     (state: AppRootStateType) => state.loading.isLoading

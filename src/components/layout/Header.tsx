@@ -9,6 +9,7 @@ import { logoutThunk } from "../../state/authThunk";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
 import { useNavigate } from "react-router-dom";
+
 export const Header = React.memo(() => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
   const isLogged = useSelector(
@@ -23,13 +24,13 @@ export const Header = React.memo(() => {
       dispatch(logoutThunk());
       navigate("/login");
     },
-    [dispatch]
+    [dispatch, navigate]
   );
 
   const handleLogin = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     navigate("/login");
-  }, []);
+  }, [navigate]);
 
   const handleMenuClose = () => {
     setAnchorElMenu(null);
@@ -39,10 +40,10 @@ export const Header = React.memo(() => {
     setAnchorElMenu(event.currentTarget);
   };
 
-  const handleSectionClick = (path: string) => {
+  const handleSectionClick = useCallback((path: string) => {
     navigate(path);
     handleMenuClose();
-  };
+  }, [navigate]);
   return (
     <AppBar position="static">
       <Toolbar>

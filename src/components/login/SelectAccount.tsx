@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -9,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import PersonIcon from "@mui/icons-material/Person";
 import { blue } from "@mui/material/colors";
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 export type AccountType = {
     email: string,
@@ -22,16 +21,16 @@ type SelectAccountPropsType = {
   onClose: (account: AccountType | null) => void
 }
 
-export const  SelectAccount = (props: SelectAccountPropsType) => {
+export const  SelectAccount = React.memo((props: SelectAccountPropsType) => {
 
   const [selectedValue, setSelectedValue] = useState<AccountType | null> (null)
 
-  const handleClose = (account: AccountType | null) => {
+  const handleClose = useCallback((account: AccountType | null) => {
     if (account) {
       setSelectedValue(account);
       props.onClose(account)
     } else props.onClose(null)
-  };
+  }, [ props.onClose]);
 
 
   return (
@@ -55,4 +54,4 @@ export const  SelectAccount = (props: SelectAccountPropsType) => {
       </Dialog>
     </div>
   );
-}
+})

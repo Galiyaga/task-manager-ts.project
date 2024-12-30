@@ -1,4 +1,4 @@
-import { Task, TaskPropsType } from "../components/Task";
+import { Task } from "../components/Task";
 import { ReduxStoreProviderDecorater } from "./ReduxStoreProviderDecorater";
 import { Meta } from "@storybook/react/*";
 
@@ -8,7 +8,7 @@ export default {
   decorators: [ReduxStoreProviderDecorater],
 } as Meta;
 
-export const TaskBaseExample = (props: TaskPropsType) => {
+export const TaskBaseExample = () => {
   return (
     <>
         <Task

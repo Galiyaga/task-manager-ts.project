@@ -60,8 +60,6 @@ export const deleteTask = createAsyncThunk<
   { rejectValue: string | undefined }
 >("tasks/deleteTask", async ({ todolistId, taskId }, { rejectWithValue }) => {
   try {
-    const res = await todolistsAndTasksAPI.deleteTask(todolistId, taskId);
-
     return { todolistId, taskId };
   } catch (error: any) {
     return rejectWithValue(error.message || "Unknown error delete tasks");

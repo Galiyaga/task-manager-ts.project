@@ -1,4 +1,4 @@
-import { applyMiddleware, configureStore, Tuple } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { tasksReducer } from "./tasksSlice";
 import { todolistsReducer } from "./todolistsSlice";
 import { errorMiddleware, isLoadingMiddleware, successLoginMiddleware } from './middleware';

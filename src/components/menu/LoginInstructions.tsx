@@ -1,4 +1,4 @@
-import { Link, Snackbar, Stack } from "@mui/material";
+import { Snackbar, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
@@ -50,7 +50,7 @@ export const LoginInstructions = () => {
         </Typography>
         <Typography variant="h6" gutterBottom sx={{ display: "block" }}>
           Более удобный способ для авторизации размещен в форме авторизации по
-          кнопке "Select an account to view the project"
+          кнопке &quot;Select an account to view the project&ldquo;
         </Typography>
         <Snackbar
           open={snackbarOpen}
@@ -83,7 +83,7 @@ export const LoginInstructions = () => {
         </Typography>
         <Typography variant="h6" gutterBottom sx={{ display: "block" }}>
           A more convenient method for authorization is located in the
-          authorization form using the "Select an account to view the project"
+          authorization form using the &quot;Select an account to view the project&ldquo;
           button
         </Typography>
         <Snackbar

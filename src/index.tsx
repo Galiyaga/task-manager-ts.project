@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { GlobalErrorDialog } from "./components/ErrorDialog";
 import { Loading } from "./components/Loading";
 import { About } from "./components/menu/About";
-import { UserDetails } from "./components/menu/UserDetails";
 import { LoginInstructions } from "./components/menu/LoginInstructions";
 import { Help } from "./components/menu/Help";
 
@@ -31,7 +30,6 @@ export default function AppRoute() {
         {isLogged ? (
           <>
             <Route path="/todolists" element={<AppWithRedux />} />
-            <Route path="/user-details" element={<UserDetails />} />
           </>
         ) : (
           <>

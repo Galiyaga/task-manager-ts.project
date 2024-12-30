@@ -13,11 +13,10 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { loginThunk } from "../../state/authThunk";
 import { useDispatch } from "react-redux";
-import { AppDispatch, AppRootStateType } from "../../state/store";
+import { AppDispatch } from "../../state/store";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AccountType, SelectAccount } from "./SelectAccount";
-import { useSelector } from "react-redux";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -78,15 +77,14 @@ export const Login = React.memo(() => {
   const [remember, setRemember] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const isLoading = useSelector((state: AppRootStateType) => state.auth);
 
-  const handleSelectAccount = (account: AccountType | null) => {
+  const handleSelectAccount = useCallback((account: AccountType | null) => {
     setOpen(false);
     if (account) {
       setEmail(account.email);
       setPassword(account.password);
     }
-  };
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -135,7 +133,7 @@ export const Login = React.memo(() => {
 
       navigate("/todolists");
     }
-  }, [dispatch, email, password, remember]);
+  }, [dispatch, navigate, email, password, remember]);
 
   return (
     <>

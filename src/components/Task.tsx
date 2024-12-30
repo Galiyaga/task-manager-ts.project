@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TaskType } from "./Todolist";
 import { ChangeEvent, useCallback } from "react";
 import { Delete } from "@mui/icons-material";
@@ -10,7 +10,7 @@ import {
   updateTasksStatus,
   updateTasksTitle,
 } from "../state/tasksThunk";
-import { AppDispatch, AppRootStateType } from "../state/store";
+import { AppDispatch } from "../state/store";
 import { Statuses, UpdateTaskModelType } from "../api/api";
 
 export type TaskPropsType = {
@@ -20,9 +20,6 @@ export type TaskPropsType = {
 
 export const Task = React.memo((props: TaskPropsType) => {
   const dispatch = useDispatch<AppDispatch>();
-  const tasks = useSelector(
-    (state: AppRootStateType) => state.tasks
-  );
 
   const onClickHandler = () =>
     dispatch(
@@ -31,10 +28,9 @@ export const Task = React.memo((props: TaskPropsType) => {
 
   const onChangeStatusHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      let newIsDoneValue = e.currentTarget.checked 
+      const newIsDoneValue = e.currentTarget.checked 
       const title = props.task.title
       const status: Statuses = newIsDoneValue ? 1 : 0;
-      console.log("status", status);
       dispatch(
         updateTasksStatus({
           taskId: props.task.id,
@@ -55,7 +51,7 @@ export const Task = React.memo((props: TaskPropsType) => {
         })
       );
     },
-    [props.task.id, props.todolistId]
+    [props.task.id, props.todolistId, props.task.title]
   );
 
   return (

@@ -50,7 +50,6 @@ export const deleteTodolist = createAsyncThunk<
   { rejectValue: string | undefined }
 >("todolists/deleteTodolist", async (id, { rejectWithValue }) => {
   try {
-    const res = await todolistsAndTasksAPI.deleteTodolist(id);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.message  || "Unknown error delete todolists");

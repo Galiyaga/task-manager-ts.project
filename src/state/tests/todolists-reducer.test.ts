@@ -8,9 +8,9 @@ import {
   updateTodolist,
 } from "../todolistsThunks";
 
-let todolistId1 = v1();
-let todolistId2 = v1();
-let todolistId3 = v1();
+const todolistId1 = v1();
+const todolistId2 = v1();
+const todolistId3 = v1();
 const newTitle = "newTitle";
 const newTodolist: TodolistType = {
   id: todolistId3,
