@@ -9,7 +9,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 255, 255);
-  overflow: hidden
 }
 
 code {
@@ -17,8 +16,3 @@ code {
     monospace;
 }
 
-main {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}

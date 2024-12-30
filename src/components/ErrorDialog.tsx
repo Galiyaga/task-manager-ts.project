@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,9 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { setError } from '../state/errorSlice';
 import { AppDispatch, AppRootStateType } from '../state/store';
+import { useNavigate } from 'react-router-dom';
 
 export const GlobalErrorDialog = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const errorMessage = useSelector(
       (state: AppRootStateType) => state.error.message
@@ -18,6 +19,7 @@ export const GlobalErrorDialog = () => {
   
     const handleClose = () => {
       dispatch(setError(''))
+      navigate(-1)
     };
   return (
     <>
@@ -28,7 +30,7 @@ export const GlobalErrorDialog = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"There was a problem"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

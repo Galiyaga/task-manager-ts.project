@@ -1,5 +1,4 @@
 import { baseInstance } from "./baseInstance";
-import { useApi } from "./useApi";
 
 // request
 export const todolistsAndTasksAPI = {
@@ -46,17 +45,13 @@ export const todolistsAndTasksAPI = {
 
 export const authAPI = {
   login(data: loginPropertiesType) {
-    const instanceWithToken = useApi();
-    return instanceWithToken.post<
-      ResponseTodolistsAndTasksType<loginResponseType>
-    >(`auth/login`, data);
+    return baseInstance.post<ResponseTodolistsAndTasksType<loginResponseType>>(
+      `auth/login`,
+      data
+    );
   },
   logout() {
-    const instanceWithToken = useApi();
-
-    return instanceWithToken.delete<ResponseTodolistsAndTasksType>(
-      `auth/login`
-    );
+    return baseInstance.delete<ResponseTodolistsAndTasksType>(`auth/login`);
   },
 };
 
