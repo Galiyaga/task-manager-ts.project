@@ -2,14 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import {} from "./todolistsSlice";
 import { loginThunk, logoutThunk } from "./authThunk";
 const loadAuthState = () => {
-  const token = localStorage.getItem("token")
   const userId = localStorage.getItem("userId")
 
-  return token && userId ? {isLogged: true, userId, token} : {isLogged: false, userId: null, token: null}
+  return userId ? {isLogged: true, userId} : {isLogged: false, userId: null}
 }
 
 type AuthStateType = {
-  auth: {isLogged: boolean, token: string | null, userId: string | null};  
+  auth: {isLogged: boolean, userId: string | null};  
   isLoading: boolean;    
 }
 
@@ -31,7 +30,6 @@ const authSlice = createSlice({
       state.isLoading = false
       state.auth.isLogged = true;
       state.auth.userId = action.payload.userId
-      state.auth.token = action.payload.token
     })
     .addCase(loginThunk.rejected, (state, action) => {
       state.isLoading = false
@@ -43,7 +41,6 @@ const authSlice = createSlice({
       state.isLoading = false
       state.auth.isLogged = false;
       state.auth.userId = null
-      state.auth.token = null
 
       localStorage.clear()
     })

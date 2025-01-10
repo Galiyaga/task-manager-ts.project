@@ -18,7 +18,6 @@ describe("login thunk", () => {
     messages: ["1"],
     data: {
       userId: 1,
-      token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
     },
   };
 
@@ -49,12 +48,10 @@ describe("login thunk", () => {
     expect(dispatch).toHaveBeenCalledWith(
       loginThunk.fulfilled({
         userId: '1',
-        token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
       }, expect.anything(), loginData)
     );
     expect(result.payload).toEqual({
       userId: '1',
-      token: '3f067cb0-4c19-4c8c-aa12-02a410173ae4'
     });
 
   });

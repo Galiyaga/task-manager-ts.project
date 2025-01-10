@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authAPI, loginPropertiesType } from "../api/api";
 
 export const loginThunk = createAsyncThunk<
-  { userId: string; token: string },
+  { userId: string },
   loginPropertiesType,
   { rejectValue: string | undefined }
 >("auth/loginThunk", async (data, { rejectWithValue }) => {
@@ -14,11 +14,9 @@ export const loginThunk = createAsyncThunk<
       );
     }
     const userId = res.data.data.userId.toString();
-    const token = res.data.data.token;
     localStorage.setItem("userId", userId);
-    localStorage.setItem("token", token);
 
-    return { userId, token };
+    return { userId };
   } catch (error: any) {
     return rejectWithValue(error.message || "Unknown error login");
   }

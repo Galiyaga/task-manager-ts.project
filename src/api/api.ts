@@ -122,7 +122,6 @@ export type loginPropertiesType = {
 
 export type loginResponseType = {
   userId: number;
-  token: string;
 };
 
 export type authResponseType = {
