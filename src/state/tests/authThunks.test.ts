@@ -43,22 +43,23 @@ describe("login thunk", () => {
 
     const result = await loginThunk(loginData)(dispatch, getState, undefined);
     expect(dispatch).toHaveBeenCalledWith(
-      loginThunk.pending(expect.anything(), loginData)
+      loginThunk.pending(expect.anything(), loginData),
     );
     expect(dispatch).toHaveBeenCalledWith(
-      loginThunk.fulfilled({
-        userId: '1',
-      }, expect.anything(), loginData)
+      loginThunk.fulfilled(
+        {
+          userId: "1",
+        },
+        expect.anything(),
+        loginData,
+      ),
     );
     expect(result.payload).toEqual({
-      userId: '1',
+      userId: "1",
     });
-
   });
   it("dispatches rejected action with error authorization message ", async () => {
-    mockedAuthAPI.login.mockRejectedValue(
-      new Error("Failed to authorization")
-    );
+    mockedAuthAPI.login.mockRejectedValue(new Error("Failed to authorization"));
 
     const dispatch = jest.fn();
     const getState = jest.fn();
@@ -66,7 +67,7 @@ describe("login thunk", () => {
     const result = await loginThunk(loginData)(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(
-      loginThunk.pending(expect.anything(), loginData)
+      loginThunk.pending(expect.anything(), loginData),
     );
     expect(result.payload).toEqual("Failed to authorization");
   });
@@ -76,8 +77,7 @@ describe("logout thunk", () => {
   const mockLogoutResponse: ResponseTodolistsAndTasksType = {
     resultCode: 0,
     messages: ["1"],
-    data: {
-    },
+    data: {},
   };
 
   const mockResponse: AxiosResponse<typeof mockLogoutResponse> = {
@@ -88,31 +88,30 @@ describe("logout thunk", () => {
     config: mockConfig,
   };
 
+  const dispatch = jest.fn();
+  const getState = jest.fn();
   it("dispatches fulfiiled action for logout", async () => {
     mockedAuthAPI.logout.mockResolvedValue(mockResponse);
 
     const dispatch = jest.fn();
 
+    await logoutThunk()(dispatch, getState, undefined)
+
     expect(dispatch).toHaveBeenCalledWith(
-      logoutThunk.pending(expect.anything(), undefined)
+      logoutThunk.pending(expect.anything(), undefined),
     );
     expect(dispatch).toHaveBeenCalledWith(
-      logoutThunk.fulfilled(undefined, expect.anything())
-      )
-}), 
-
+      logoutThunk.fulfilled(undefined, expect.anything()),
+    );
+  }),
     it("dispatches rejected action with error logout message", async () => {
-      mockedAuthAPI.logout.mockRejectedValue(
-        new Error("Failed to logout")
-      );
-  
-      const dispatch = jest.fn();
-      const getState = jest.fn();
-  
+      mockedAuthAPI.logout.mockRejectedValue(new Error("Failed to logout"));
+
+
       const result = await logoutThunk()(dispatch, getState, undefined);
-  
+
       expect(dispatch).toHaveBeenCalledWith(
-        logoutThunk.pending(expect.anything(), undefined)
+        logoutThunk.pending(expect.anything(), undefined),
       );
       expect(result.payload).toEqual("Failed to logout");
     });

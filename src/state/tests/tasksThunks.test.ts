@@ -70,7 +70,7 @@ describe("getTasks thunk", () => {
 
     const result = await getTasks(todolistId)(dispatch, getState, undefined);
     expect(dispatch).toHaveBeenCalledWith(
-      getTasks.pending(expect.anything(), todolistId)
+      getTasks.pending(expect.anything(), todolistId),
     );
     expect(dispatch).toHaveBeenCalledWith(
       getTasks.fulfilled(
@@ -79,8 +79,8 @@ describe("getTasks thunk", () => {
           todolistId: "test-totdolist-id",
         },
         expect.anything(),
-        todolistId
-      )
+        todolistId,
+      ),
     );
     expect(result.payload).toEqual({
       tasksArr: [{ id: "task-1", title: "Task 1 Title", isDone: false }],
@@ -90,7 +90,7 @@ describe("getTasks thunk", () => {
 
   it("dispatches rejected action with error message on failure in the getTasksThunk", async () => {
     mockedtodolistsAndTasksAPI.getTasks.mockRejectedValue(
-      new Error("Failed to get tasks")
+      new Error("Failed to get tasks"),
     );
 
     const dispatch = jest.fn();
@@ -99,7 +99,7 @@ describe("getTasks thunk", () => {
     const result = await getTasks(todolistId)(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(
-      getTasks.pending(expect.anything(), todolistId)
+      getTasks.pending(expect.anything(), todolistId),
     );
     expect(result.payload).toEqual("Failed to get tasks");
   });
@@ -144,7 +144,7 @@ describe("createTask thunk", () => {
     const result = await createTask(mockTask)(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(
-      createTask.pending(expect.anything(), mockTask)
+      createTask.pending(expect.anything(), mockTask),
     );
 
     expect(dispatch).toHaveBeenCalledWith(
@@ -154,8 +154,8 @@ describe("createTask thunk", () => {
           todolistId: "test-totdolist-id",
         },
         expect.anything(),
-        mockTask
-      )
+        mockTask,
+      ),
     );
 
     expect(result.payload).toEqual({
@@ -166,7 +166,7 @@ describe("createTask thunk", () => {
 
   it("dispatches rejected action with error message on failure in the createTaskThunk", async () => {
     mockedtodolistsAndTasksAPI.createTask.mockRejectedValue(
-      new Error("Failed to create task")
+      new Error("Failed to create task"),
     );
 
     const dispatch = jest.fn();
@@ -175,13 +175,15 @@ describe("createTask thunk", () => {
     const result = await createTask(mockTask)(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(
-      createTask.pending(expect.anything(), mockTask)
+      createTask.pending(expect.anything(), mockTask),
     );
     expect(result.payload).toEqual("Failed to create task");
   });
 });
 
 describe("deleteTask thunk", () => {
+  const dispatch = jest.fn();
+  const getState = jest.fn();
   it("dispatches fulfiiled action with from the task ID to be deleted on seccess", async () => {
     const mockTaskResponse: ResponseTodolistsAndTasksType = {
       resultCode: 0,
@@ -199,23 +201,20 @@ describe("deleteTask thunk", () => {
 
     mockedtodolistsAndTasksAPI.deleteTask.mockResolvedValue(mockResponse);
 
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-
     const result = await deleteTask(mockForDeleteTask)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTask.pending(expect.anything(), mockForDeleteTask)
+      deleteTask.pending(expect.anything(), mockForDeleteTask),
     );
     expect(dispatch).toHaveBeenCalledWith(
       deleteTask.fulfilled(
         { todolistId: "test-totdolist-id", taskId: "task-1" },
         expect.anything(),
-        mockForDeleteTask
-      )
+        mockForDeleteTask,
+      ),
     );
     expect(result.payload).toEqual({
       todolistId: "test-totdolist-id",
@@ -225,20 +224,17 @@ describe("deleteTask thunk", () => {
 
   it("dispatches rejected action with error message on failure in the deleteTaskThunk", async () => {
     mockedtodolistsAndTasksAPI.deleteTask.mockRejectedValue(
-      new Error("Failed to delete task")
+      new Error("Failed to delete task"),
     );
-
-    const dispatch = jest.fn();
-    const getState = jest.fn();
 
     const result = await deleteTask(mockForDeleteTask)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      deleteTask.pending(expect.anything(), mockForDeleteTask)
+      deleteTask.pending(expect.anything(), mockForDeleteTask),
     );
     expect(result.payload).toEqual("Failed to delete task");
   });
@@ -289,11 +285,11 @@ describe("updateTasksTitle thunk", () => {
     const result = await updateTasksTitle(mockArgs)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      updateTasksTitle.pending(expect.anything(), mockArgs)
+      updateTasksTitle.pending(expect.anything(), mockArgs),
     );
 
     expect(dispatch).toHaveBeenCalledWith(
@@ -304,8 +300,8 @@ describe("updateTasksTitle thunk", () => {
           title: "Update Task 1 Title",
         },
         expect.anything(),
-        mockArgs
-      )
+        mockArgs,
+      ),
     );
 
     expect(result.payload).toEqual({
@@ -317,7 +313,7 @@ describe("updateTasksTitle thunk", () => {
 
   it("dispatches rejected action with error message on failure in the updateTasksTitleThunk", async () => {
     mockedtodolistsAndTasksAPI.updateTask.mockRejectedValue(
-      new Error("Failed to update task`s title")
+      new Error("Failed to update task`s title"),
     );
 
     const dispatch = jest.fn();
@@ -326,11 +322,11 @@ describe("updateTasksTitle thunk", () => {
     const result = await updateTasksTitle(mockArgs)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      updateTasksTitle.pending(expect.anything(), mockArgs)
+      updateTasksTitle.pending(expect.anything(), mockArgs),
     );
     expect(result.payload).toEqual("Failed to update task`s title");
   });
@@ -381,11 +377,11 @@ describe("updateTasksStatus thunk", () => {
     const result = await updateTasksStatus(mockArgs)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      updateTasksStatus.pending(expect.anything(), mockArgs)
+      updateTasksStatus.pending(expect.anything(), mockArgs),
     );
 
     expect(dispatch).toHaveBeenCalledWith(
@@ -395,12 +391,12 @@ describe("updateTasksStatus thunk", () => {
           taskId: "task-1",
           model: {
             status: true,
-            title: "Task 1 Title"
-          }
+            title: "Task 1 Title",
+          },
         },
         expect.anything(),
-        mockArgs
-      )
+        mockArgs,
+      ),
     );
 
     expect(result.payload).toEqual({
@@ -408,14 +404,14 @@ describe("updateTasksStatus thunk", () => {
       taskId: "task-1",
       model: {
         status: true,
-        title: "Task 1 Title"
-      }
+        title: "Task 1 Title",
+      },
     });
   });
 
   it("dispatches rejected action with error message on failure in the updateTasksStatus", async () => {
     mockedtodolistsAndTasksAPI.updateTask.mockRejectedValue(
-      new Error("Failed to update task`s status")
+      new Error("Failed to update task`s status"),
     );
 
     const dispatch = jest.fn();
@@ -424,11 +420,11 @@ describe("updateTasksStatus thunk", () => {
     const result = await updateTasksStatus(mockArgs)(
       dispatch,
       getState,
-      undefined
+      undefined,
     );
 
     expect(dispatch).toHaveBeenCalledWith(
-      updateTasksStatus.pending(expect.anything(), mockArgs)
+      updateTasksStatus.pending(expect.anything(), mockArgs),
     );
     expect(result.payload).toEqual("Failed to update task`s status");
   });
