@@ -16,43 +16,51 @@ import { Help } from "./components/menu/Help";
 
 export default function AppRoute() {
   const isLogged = useSelector(
-    (state: AppRootStateType) => state.auth.auth.isLogged
+    (state: AppRootStateType) => state.auth.auth.isLogged,
   );
 
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to={isLogged ? "/todolists" : "/login"} />} />
-        
+        <Route
+          index
+          element={<Navigate to={isLogged ? "/todolists" : "/login"} replace />}
+        />
+
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<Help />} />
-        
-        {isLogged ? (
-          <>
-            <Route path="/todolists" element={<AppWithRedux />} />
-          </>
-        ) : (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/login/instructions" element={<LoginInstructions />} />
-          </>
-        )}
+        <Route path="/login/instructions" element={<LoginInstructions />} />
+
+        <Route
+          path="/todolists"
+          element={
+            isLogged ? <AppWithRedux /> : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route
+          path="/login"
+          element={isLogged ? <Navigate to="/todolists" replace /> : <Login />}
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   );
 }
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 
 root.render(
   <Provider store={store}>
-    <Loading />
     <BrowserRouter>
+      <Loading />
       <GlobalErrorDialog />
       <AppRoute />
     </BrowserRouter>
-  </Provider>
+  </Provider>,
 );
+
 reportWebVitals();

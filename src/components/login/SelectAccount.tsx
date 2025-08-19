@@ -35,7 +35,7 @@ export const  SelectAccount = React.memo((props: SelectAccountPropsType) => {
 
   return (
     <div>
-      <Dialog onClose={() => handleClose(null)} open={props.open}>
+      <Dialog onClose={() => handleClose(null)} open={props.open} closeAfterTransition={false}>
         <DialogTitle>Set backup account</DialogTitle>
         <List sx={{ pt: 0 }}>
           {props.accounts.map((account) => (
