@@ -33,6 +33,10 @@ export const createTodolist = createAsyncThunk<
   try {
     const res = await todolistsAndTasksAPI.createTodolist(title);
 
+    if (res.data.resultCode !== 0) {
+      return rejectWithValue(res.data.messages[0] || "Failed to create todolist");
+    }
+
     const formattedTodolist: TodolistType = {
       id: res.data.data.item.id,
       title: res.data.data.item.title,
@@ -50,7 +54,13 @@ export const deleteTodolist = createAsyncThunk<
   { rejectValue: string | undefined }
 >("todolists/deleteTodolist", async (id, { rejectWithValue }) => {
   try {
-    return id;
+    const res = await todolistsAndTasksAPI.deleteTodolist(id);
+    
+    if (res.data.resultCode !== 0) {
+      return rejectWithValue(res.data.messages[0] || "Failed to delete todolist");
+    }
+    
+    return id; 
   } catch (error: any) {
     return rejectWithValue(error.message  || "Unknown error delete todolists");
   }
@@ -63,9 +73,11 @@ export const updateTodolist = createAsyncThunk<
 >("todolists/updateTodolists", async ({ id, title }, { rejectWithValue }) => {
   try {
     const res = await todolistsAndTasksAPI.updateTodolist(id, title);
+    
     if (res.data.resultCode !== 0) {
-      return rejectWithValue("Failed to update todolist");
+      return rejectWithValue(res.data.messages[0] || "Failed to update todolist");
     }
+    
     return { id, title };
   } catch (error: any) {
     return rejectWithValue(error.message  || "Unknown error update todolists");
