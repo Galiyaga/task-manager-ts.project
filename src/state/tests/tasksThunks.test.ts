@@ -98,8 +98,16 @@ describe("getTasks thunk", () => {
 
     const result = await getTasks(todolistId)(dispatch, getState, undefined);
 
-    expect(dispatch).toHaveBeenCalledWith(
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
       getTasks.pending(expect.anything(), todolistId),
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        type: "tasks/getTasks/rejected",
+        payload: "Failed to get tasks",
+      }),
     );
     expect(result.payload).toEqual("Failed to get tasks");
   });
@@ -174,16 +182,22 @@ describe("createTask thunk", () => {
 
     const result = await createTask(mockTask)(dispatch, getState, undefined);
 
-    expect(dispatch).toHaveBeenCalledWith(
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
       createTask.pending(expect.anything(), mockTask),
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        type: "tasks/createTask/rejected",
+        payload: "Failed to create task",
+      }),
     );
     expect(result.payload).toEqual("Failed to create task");
   });
 });
 
 describe("deleteTask thunk", () => {
-  const dispatch = jest.fn();
-  const getState = jest.fn();
   it("dispatches fulfiiled action with from the task ID to be deleted on seccess", async () => {
     const mockTaskResponse: ResponseTodolistsAndTasksType = {
       resultCode: 0,
@@ -198,6 +212,9 @@ describe("deleteTask thunk", () => {
       headers: new AxiosHeaders(),
       config: mockConfig,
     };
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
 
     mockedtodolistsAndTasksAPI.deleteTask.mockResolvedValue(mockResponse);
 
@@ -227,14 +244,25 @@ describe("deleteTask thunk", () => {
       new Error("Failed to delete task"),
     );
 
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
     const result = await deleteTask(mockForDeleteTask)(
       dispatch,
       getState,
       undefined,
     );
 
-    expect(dispatch).toHaveBeenCalledWith(
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
       deleteTask.pending(expect.anything(), mockForDeleteTask),
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        type: "tasks/deleteTask/rejected",
+        payload: "Failed to delete task",
+      }),
     );
     expect(result.payload).toEqual("Failed to delete task");
   });
@@ -325,8 +353,16 @@ describe("updateTasksTitle thunk", () => {
       undefined,
     );
 
-    expect(dispatch).toHaveBeenCalledWith(
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
       updateTasksTitle.pending(expect.anything(), mockArgs),
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        type: "tasks/updateTasksTitle/rejected",
+        payload: "Failed to update task`s title",
+      }),
     );
     expect(result.payload).toEqual("Failed to update task`s title");
   });
@@ -423,8 +459,16 @@ describe("updateTasksStatus thunk", () => {
       undefined,
     );
 
-    expect(dispatch).toHaveBeenCalledWith(
+    expect(dispatch).toHaveBeenNthCalledWith(
+      1,
       updateTasksStatus.pending(expect.anything(), mockArgs),
+    );
+    expect(dispatch).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        type: "tasks/updateTasksStatus/rejected",
+        payload: "Failed to update task`s status",
+      }),
     );
     expect(result.payload).toEqual("Failed to update task`s status");
   });
