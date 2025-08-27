@@ -8,29 +8,34 @@ import React, { useCallback } from "react";
 import { logoutThunk } from "../../state/authThunk";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Header = React.memo(() => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
   const isLogged = useSelector(
-    (state: AppRootStateType) => state.auth.auth.isLogged
+    (state: AppRootStateType) => state.auth.auth.isLogged,
   );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const isHomePage = location.pathname === "/todolists";
   const handleLogout = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       dispatch(logoutThunk());
       navigate("/login");
     },
-    [dispatch, navigate]
+    [dispatch, navigate],
   );
 
-  const handleLogin = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    navigate("/login");
-  }, [navigate]);
+  const handleLogin = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      navigate("/login");
+    },
+    [navigate],
+  );
 
   const handleMenuClose = () => {
     setAnchorElMenu(null);
@@ -40,10 +45,13 @@ export const Header = React.memo(() => {
     setAnchorElMenu(event.currentTarget);
   };
 
-  const handleSectionClick = useCallback((path: string) => {
-    navigate(path);
-    handleMenuClose();
-  }, [navigate]);
+  const handleSectionClick = useCallback(
+    (path: string) => {
+      navigate(path);
+      handleMenuClose();
+    },
+    [navigate],
+  );
   return (
     <AppBar position="static">
       <Toolbar>
@@ -60,6 +68,9 @@ export const Header = React.memo(() => {
           open={Boolean(anchorElMenu)}
           onClose={handleMenuClose}
         >
+          {!isHomePage && (
+            <MenuItem onClick={() => handleSectionClick("/todolists")}>Todolists</MenuItem>
+          )}
           <MenuItem onClick={() => handleSectionClick("/about")}>
             About the project
           </MenuItem>
